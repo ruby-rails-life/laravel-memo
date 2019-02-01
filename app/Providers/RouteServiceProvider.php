@@ -23,8 +23,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
+        // 指定した正規表現でいつもルートパラメータを制約したい場合
+        Route::pattern('id', '[0-9]+');
         parent::boot();
     }
 
