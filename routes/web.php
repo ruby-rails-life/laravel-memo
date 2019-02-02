@@ -17,6 +17,7 @@ Route::get('/', function () {
 });
 */
 Route::get('/', 'ArticleController@index');
+
 Route::get('create', 'ArticleController@create');
 Route::post('create', 'ArticleController@store');
 Route::get('edit/{id}', 'ArticleController@edit');
@@ -25,3 +26,7 @@ Route::get('delete/{id}', 'ArticleController@show');
 Route::post('delete', 'ArticleController@delete');
 
 Route::resource('posts', 'PostController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
