@@ -7,9 +7,23 @@ use App\Article;
 
 class ArticleController extends Controller
 {
-    public function index() {
-        $articles = Article::all();
-        return view('article.index', ['articles' => $articles]);
+    public function index(Request $request) {
+        #キーワード受け取り
+        $keyword = $request->input('keyword');
+        
+        #クエリ生成
+        $query = Article::query();
+ 
+        #キーワードがある場合
+        if(!empty($keyword))
+        {
+            $query->where('title','like',"%$keyword%");
+        }
+        
+        #ページネーション
+        $articles = $query->orderBy('created_at','desc')->paginate(2);
+        return view('article.index')->with('articles',$articles)->with('keyword',$keyword);
+        //return view('article.index', ['articles' => $articles, 'keyword' => $keyword]);
     }
 
     public function create() {
