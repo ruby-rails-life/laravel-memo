@@ -8,6 +8,11 @@ use Validator;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -38,18 +43,19 @@ class PostController extends Controller
     public function store(Request $request)
     {
       $rules = [
-        'title' => 'required',
+        'title' => 'required|kana',
         'content'=>'required',
         'category_id' => 'required',
       ];
 
-      $messages = array(
-        'title.required' => 'タイトルを正しく入力してください。',
-        'content.required' => '本文を正しく入力してください。',
-        'category_id.required' => 'カテゴリーを選択してください。',
-      );
+      // $messages = array(
+      //   'title.required' => 'タイトルを正しく入力してください。',
+      //   'content.required' => '本文を正しく入力してください。',
+      //   'category_id.required' => 'カテゴリーを選択してください。',
+      // );
 
-      $validator = Validator::make($request->all(), $rules, $messages);
+      //$validator = Validator::make($request->all(), $rules, $messages);
+      $validator = Validator::make($request->all(), $rules);
 
       if ($validator->passes()) {
         $post = new Post;
