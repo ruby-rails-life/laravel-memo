@@ -43,3 +43,5 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('ajax','ArticleController@ajax');
 
 });
+
+Route::resource('/photos', 'PhotosController', ['only' => ['create', 'store','index']]);
