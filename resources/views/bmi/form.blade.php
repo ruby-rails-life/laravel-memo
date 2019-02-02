@@ -11,8 +11,11 @@
   {!! csrf_field() !!}
   <div class="form-group">
   <label for="InputHeight">身長(cm)</label>
-  <input type="text" name="height" class="form-control" id="InputHeight" placeholder="半角英数字のみ">
+  <input type="text" name="height" value="{{ old('height') }}" class="form-control" id="InputHeight" placeholder="半角英数字のみ">
+
+  @if($errors->has('height'))<span class="error">{{ $errors->first('height') }}</span> @endif
   </div>
+
   <div class="form-group">
   <label for="InputWeight">体重(kg)</label>
   <input type="text" name="weight" class="form-control" id="InputWeight" placeholder="半角英数字のみ">
