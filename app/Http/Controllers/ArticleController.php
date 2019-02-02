@@ -26,6 +26,25 @@ class ArticleController extends Controller
         //return view('article.index', ['articles' => $articles, 'keyword' => $keyword]);
     }
 
+    //jsonを返す
+    public function json()
+    {
+        $query = Article::query();
+
+        $articles = $query->orderBy('created_at','desc')->paginate(5);
+        return \Response::json($articles);
+    }
+
+    //ajaxでページネート
+    public function ajax(Request $request)
+    {
+        $page = $request->input('page');
+        if(empty($page)) $page = 1;
+
+        return view('article.ajax')->with('page',$page);
+    }
+
+
     public function create() {
         return view('article.create');
     }

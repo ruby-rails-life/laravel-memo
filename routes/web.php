@@ -30,3 +30,16 @@ Route::resource('posts', 'PostController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => ['web']], function () {
+
+    //普通の一覧用
+    Route::get('/','ArticleController@index');
+
+    //JSON API
+    Route::get('json','ArticleController@json');
+
+    //APIを呼び出す一覧用
+    Route::get('ajax','ArticleController@ajax');
+
+});
