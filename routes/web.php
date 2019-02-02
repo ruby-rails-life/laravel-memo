@@ -45,3 +45,15 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::resource('/photos', 'PhotosController', ['only' => ['create', 'store','index']]);
+
+# 入力画面
+Route::get('bmi/form', [
+  'uses' => 'BmiCalController@getIndex',
+  'as' => 'bmi.form'
+]);
+ 
+# 計算結果
+Route::post('bmi/result', [
+  'uses' => 'BmiCalController@result',
+  'as' => 'bmi.result'
+]);
