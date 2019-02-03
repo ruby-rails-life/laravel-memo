@@ -60,3 +60,10 @@ Route::post('bmi/result', [
 
 Route::get('/students', 'StudentsController@create');
 Route::post('/students', 'StudentsController@store');
+
+Route::group(['middleware' => ['auth']], function () {
+  // この中はログインされている場合のみルーティングされる
+  Route::get('/todo', function () {
+    return view('vue.todo');
+  });
+});
