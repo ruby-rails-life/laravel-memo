@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use Log;
 
 class ArticleController extends Controller
 {
@@ -20,8 +21,14 @@ class ArticleController extends Controller
             $query->where('title','like',"%$keyword%");
         }
         
+        // DEBUG
+        $articles_sql = $query->toSql();
+        Log::debug('$articles_sql="'.$articles_sql.'""');
+
         #ページネーション
         $articles = $query->orderBy('created_at','desc')->paginate(2);
+        Log::debug('$articles="'.$articles.'""');
+
         return view('article.index')->with('articles',$articles)->with('keyword',$keyword);
         //return view('article.index', ['articles' => $articles, 'keyword' => $keyword]);
     }
