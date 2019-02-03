@@ -15,6 +15,12 @@
                     @endif
 
                     You are logged in!
+
+                    <div class="list-group mt-3" style="max-width: 300px;">
+  　　　　　                <a href="/posts" target="_blank" class="list-group-item list-group-item-action active">記事-コメント(posts)</a>
+                        <a href="/photos" target="_blank" class="list-group-item list-group-item-action">画像アップロード(photos)</a>
+                        <a href="/bmi/form" target="_blank" class="list-group-item list-group-item-action">サービス(bmi)</a>
+                    </div>
                 </div>
             </div>
         </div>
