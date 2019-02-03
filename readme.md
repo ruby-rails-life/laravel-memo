@@ -1,12 +1,12 @@
 ## Laravel Memo
 
-- Article CRUD
-- Table Relationship:Category-Post-Comment
+- Article CRUD[/]
+- Table Relationship:Category-Post-Comment[/posts]
 - php artisan make:auth
-- CustomValidator
-- SearchForm And Paginate
-- Image Upload: intervention/image library
-- CustomService And Design: Flat UI (Bootstrap)
-- Students-Courses(ManyToMany)
-- Seeder作成：Faker
-- Vue.js(/todo)
+- CustomValidator[CustomValidator.php]
+- SearchForm And Paginate[/]
+- Image Upload: intervention/image library[/photos]
+- CustomService And Design: Flat UI (Bootstrap)[/bmi/form]
+- Students-Courses(ManyToMany)[/students]
+- Seeder作成：Faker[CourseStudentSeeder.php]
+- Vue.js[/todo]
