@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class BmiCalController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function getIndex() 
     {
         return view('bmi.form');

@@ -57,3 +57,6 @@ Route::post('bmi/result', [
   'uses' => 'BmiCalController@result',
   'as' => 'bmi.result'
 ]);
+
+Route::get('/students', 'StudentsController@create');
+Route::post('/students', 'StudentsController@store');
