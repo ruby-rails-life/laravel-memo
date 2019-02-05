@@ -11,3 +11,4 @@
 - Seeder作成：Faker[CourseStudentSeeder.php]
 - Vue.js[/todo]
 - Custom Directive[/welcome]
+- lang[/welcome]
