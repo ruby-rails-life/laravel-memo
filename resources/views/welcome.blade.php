@@ -80,7 +80,64 @@
             @endif
 
             <div class="content">
-                Custom Directive : @datetime(new DateTime())
+                <table>
+                    <tr>
+                        <td>
+                            Custom Directive        
+                        </td>
+                        <td>
+                            @datetime(new DateTime())
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            message1
+                        </td>
+                        <td>
+                        {{ __('messages.welcome1')}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            message2
+                        </td>
+                        <td>
+                        @lang('messages.welcome2', ['name' => 'angel'])
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            goodbye
+                        </td>
+                        <td>
+                        @lang('messages.goodbye', ['name' => 'angel'])
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            trans_choice:apples
+                        </td>
+                        <td>
+                        {{trans_choice('messages.apples', 10)}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            trans_choice:minutes_ago
+                        </td>
+                        <td>
+                        {{trans_choice('messages.minutes_ago', 5, ['value' => 5])}}
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            trans_choice:oranges :count
+                        </td>
+                        <td>
+                        {{trans_choice('messages.oranges', 5)}}
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </body>
