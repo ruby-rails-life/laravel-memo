@@ -36,4 +36,23 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * 認証を処理する
+     *
+     * @param  \Illuminate\Http\Request $request
+     *
+     * @return Response
+     */
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        //if (Auth::attempt($credentials)) {
+        if (Auth::attempt(['email' => $email, 'password' => $password, 'active' => 1])) {
+        //if (Auth::attempt(['email' => $email, 'password' => $password], $remember)) {
+            // 認証に成功した
+            return redirect()->intended('/home');
+        }
+    }
 }

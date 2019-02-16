@@ -26,5 +26,13 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+        // Auth::viaRequest('custom-token', function ($request) {
+        //     return User::where('token', $request->token)->first();
+        // });
+
+        // Auth::provider('riak', function($app, array $config) {
+        //     // Illuminate\Contracts\Auth\UserProviderのインスタンスを返す
+        //     return new RiakUserProvider($app->make('riak.connection'));
+        // });
     }
 }

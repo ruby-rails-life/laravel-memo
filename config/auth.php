@@ -43,6 +43,7 @@ return [
 
         'api' => [
             'driver' => 'token',
+            //'driver' => 'custom-token',
             'provider' => 'users',
         ],
     ],
@@ -67,6 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
+            //'driver' => 'riak',
             'model' => App\User::class,
         ],
 

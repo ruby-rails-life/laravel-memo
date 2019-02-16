@@ -25,6 +25,40 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <table>
+                <tr>
+                    <td>
+                    user from request:{{$userReq->name}}
+                    </td>
+                </tr>
+                <tr>     
+                    <td>
+                    user checked?:{{Auth::check()}}    
+                    </td>   
+                </tr>
+                <tr>
+                    <td>
+                    viaRemember?:{{Auth::viaRemember()}}
+                    </td>
+                </tr>
+                <tr>    
+                    <td>
+                    decrypted:{{$decrypted}}
+                    </td>    
+                </tr>
+                <tr>    
+                    <td>
+                    bcrypt:{{$bcrypt}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Hash::check:{{Hash::check('Hello', $bcrypt)}}
+                    </td>    
+                </tr>       
+            </table>    
+        </div>
     </div>
 </div>
 @endsection

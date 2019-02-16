@@ -12,3 +12,4 @@
 - Vue.js[/todo]
 - Custom Directive[/welcome]
 - lang[/welcome]
+- authentication[/home]
