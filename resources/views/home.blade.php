@@ -21,6 +21,9 @@
                         <a href="/photos" target="_blank" class="list-group-item list-group-item-action">画像アップロード(photos)</a>
                         <a href="/bmi/form" target="_blank" class="list-group-item list-group-item-action">サービス(bmi)</a>
                         <a href="/students" target="_blank" class="list-group-item list-group-item-action">Student-Courses(ManyToMany)</a>
+                        @can('admin', App\User::class)
+                        <a href="/user" target="_blank" class="list-group-item list-group-item-action">ユーザ一覧</a>
+                        @endcan
                     </div>
                 </div>
             </div>

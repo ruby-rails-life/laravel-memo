@@ -5,9 +5,8 @@
 <div class="col-xs-12">
     <p><a href="/posts/create" class="btn btn-success">投稿</a></p> 
 </div>    
-<div class="col-xs-8 col-xs-offset-2">
 @endcan
-
+<div class="col-xs-8 col-xs-offset-2">
 @foreach($posts as $post)
 
     <h2>タイトル：{{ $post->title }}

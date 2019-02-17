@@ -66,4 +66,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/todo', function () {
     return view('vue.todo');
   });
+
+  Route::get('/user', 'UserController@index');
+
 });
