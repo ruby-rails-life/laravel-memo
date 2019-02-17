@@ -1,10 +1,12 @@
 @extends('layouts.default')
 @section('content')
 
+@can('admin', App\Post::class)
 <div class="col-xs-12">
     <p><a href="/posts/create" class="btn btn-success">投稿</a></p> 
 </div>    
 <div class="col-xs-8 col-xs-offset-2">
+@endcan
 
 @foreach($posts as $post)
 

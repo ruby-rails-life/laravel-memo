@@ -59,7 +59,7 @@ Route::post('bmi/result', [
 ]);
 
 Route::get('/students', 'StudentsController@create');
-Route::post('/students', 'StudentsController@store');
+Route::post('/students', 'StudentsController@store')->middleware('can:admin,App\Student');
 
 Route::group(['middleware' => ['auth']], function () {
   // この中はログインされている場合のみルーティングされる

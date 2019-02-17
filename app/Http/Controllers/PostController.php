@@ -34,13 +34,16 @@ class PostController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->can('admin', Post::class)) {
-            // 関連するポリシーの"create"メソッドが実行される
-            return view('board.create');
-        }
-        else{
-            return 'You can not access';
-        }
+        $this->authorize('admin', Post::class);
+        return view('board.create');
+        
+        // if (Auth::user()->can('admin', Post::class)) {
+        //     // 関連するポリシーの"create"メソッドが実行される
+        //     return view('board.create');
+        // }
+        // else{
+        //     return 'You can not access';
+        // }
     }
 
     /**
