@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Validator;
 
 class PostController extends Controller
@@ -21,6 +23,7 @@ class PostController extends Controller
     public function index()
     {
       $posts = Post::all();
+      //$posts = Post::where('user_id',1)->get();
       return view('board.index', ['posts' => $posts]);
     }
 
@@ -31,7 +34,13 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('board.create');
+        if (Auth::user()->can('admin', Post::class)) {
+            // 関連するポリシーの"create"メソッドが実行される
+            return view('board.create');
+        }
+        else{
+            return 'You can not access';
+        }
     }
 
     /**
@@ -63,6 +72,7 @@ class PostController extends Controller
         $post->content = $request->content;
         $post->category_id = $request->category_id;
         $post->comment_count = 0;
+        $post->user_id = Auth::user()->id;
         $post->save();
         return redirect('/posts/create')
           ->with('message', '投稿が完了しました。');
@@ -81,7 +91,13 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-      return view('board.single',['post' => $post]);
+        if (Gate::allows('board.single', $post)) {
+            // 現在のユーザーはこのポストを更新できる
+            return view('board.single',['post' => $post]);
+        }
+        else{
+            return 'You can not access';
+        }
     }
 
     /**

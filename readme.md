@@ -13,3 +13,4 @@
 - Custom Directive[/welcome]
 - lang[/welcome]
 - authentication[/home]
+- authorize(add role to user)[/posts]

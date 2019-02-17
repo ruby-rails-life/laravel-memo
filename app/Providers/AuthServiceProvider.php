@@ -14,6 +14,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        //Post::class => PostPolicy::class,
+        'App\Post' => 'App\Policies\PostPolicy',
     ];
 
     /**
@@ -34,5 +36,10 @@ class AuthServiceProvider extends ServiceProvider
         //     // Illuminate\Contracts\Auth\UserProviderのインスタンスを返す
         //     return new RiakUserProvider($app->make('riak.connection'));
         // });
+
+        Gate::define('board.single', 'App\Policies\PostPolicy@view');
+        Gate::define('admin', function($user){
+            return $user->role == 1;
+        });
     }
 }
