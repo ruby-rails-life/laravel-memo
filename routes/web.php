@@ -69,4 +69,8 @@ Route::group(['middleware' => ['auth']], function () {
 
   Route::get('/user', 'UserController@index');
 
+  Route::resource('/clover','CloverController');
+  Route::get('/clover/restore/{clover_name}', 'CloverController@restore');
+  Route::post('/clover/delete/{clover_name}', 'CloverController@delete');
+
 });

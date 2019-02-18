@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Redis;
 
 class LoginController extends Controller
 {
@@ -51,6 +52,9 @@ class LoginController extends Controller
         //if (Auth::attempt($credentials)) {
         if (Auth::attempt(['email' => $email, 'password' => $password, 'active' => 1])) {
         //if (Auth::attempt(['email' => $email, 'password' => $password], $remember)) {
+            
+            //Redis::set('redis-name', 'spring');
+
             // 認証に成功した
             return redirect()->intended('/home');
         }

@@ -16,3 +16,4 @@
 - authorize(add role to user)[/posts][/students]
 - DB::listen(output sql:AppServiceProvider.php)
 - Query Builder[/user]
+- Eloquent[/clover]

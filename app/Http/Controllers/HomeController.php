@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 
 class HomeController extends Controller
 {
@@ -33,6 +34,13 @@ class HomeController extends Controller
         }
 
         $userReq = $request->user();
-        return view('home',['userReq' => $userReq, 'decrypted' => $decrypted, 'bcrypt'=> $bcrypt]);
+
+        //$redis_name = Redis::get('redis-name');
+
+        return view('home',['userReq' => $userReq, 
+            'decrypted' => $decrypted, 
+            'bcrypt'=> $bcrypt,
+            //'redis_name' => $redis_name
+        ]);
     }
 }
