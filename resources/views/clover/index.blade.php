@@ -9,7 +9,7 @@
 
     <div class="row">
       <div class="offset-sm-2 col-sm-8">
-        <h4>クローバー一覧</h4>
+        <h4>クローバー一覧(withoutScope件数:{{$clovers_count}}件)</h4>
         <div class="table-responsive">
           <table class="table table-striped text-nowrap">
             <thead>
@@ -26,7 +26,7 @@
             @foreach ($clovers as $clover)
               <tr>
                 <td>
-                  {{$clover->clover_name}}
+                  <a href="/clover/{{$clover->clover_name}}/edit">{{$clover->clover_name}}</a>
                 </td>
                 <td>
                   <a href="javascript:void(0)" onclick="javascript:hard_delete('{{$clover->clover_name}}')">完全削除</a>
@@ -42,6 +42,31 @@
                 </td> 
                 <td>
                   {{$clover->symbol}}
+                </td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+   
+
+    <div class="row">
+      <div class="offset-sm-2 col-sm-8">
+        <h4>Local Scope</h4>
+        <div class="table-responsive">
+          <table class="table table-striped text-nowrap">
+            <thead>
+              <tr>
+                <th>名前</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach ($cloves_local_scope as $clover)
+              <tr>
+                <td>
+                  <a href="/clover/{{$clover->clover_name}}/edit">{{$clover->clover_name}}</a>
                 </td>
               </tr>
             @endforeach

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Clover;
+use App\Scopes\ActiveScope;
 
 class CloverController extends Controller
 {
@@ -16,7 +17,16 @@ class CloverController extends Controller
     {
         $clovers = Clover::withTrashed()->get();
 
-        return view('clover.index', ['clovers' => $clovers]);
+        $clovers_count = Clover::withoutGlobalScope(ActiveScope::class)->withTrashed()->count();
+
+        //$cloves_local_scope = Clover::leaves()->orderBy('leaf_num')->get();
+        $cloves_local_scope = Clover::ofLeaf(5)->get();
+
+        return view('clover.index', [
+            'clovers' => $clovers, 
+            'clovers_count' => $clovers_count, 
+            'cloves_local_scope' => $cloves_local_scope]
+        );
     }
 
     /**
@@ -36,24 +46,27 @@ class CloverController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        // $clover = new Clover;
-        // $clover->clover_name = $request->clover_name;
-        // $clover->symbol = $request->symbol;
-        // $clover->save();
+        $clover = new Clover;
+        $clover->clover_name = $request->clover_name;
+        $clover->symbol = $request->symbol;
+        $clover->leaf_num = intval($request->leaf_num);
+        $clover->save();
  
-        $clover = \App\Clover::firstOrCreate(
-            ['clover_name' => $request->clover_name], ['symbol' => $request->symbol]
-        );
+        // $clover = \App\Clover::firstOrCreate(
+        //     ['clover_name' => $request->clover_name], 
+        //     ['symbol' => $request->symbol],
+        //     ['leaf_num' => intval($request->leaf_num)]
+        // );
         return redirect('/clover');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $clover_name
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($clover_name)
     {
         //
     }
@@ -61,24 +74,31 @@ class CloverController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $clover_name
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($clover_name)
     {
-        //
+        $clover = Clover::withTrashed()->find($clover_name);
+        return view('clover.edit', ['clover' => $clover]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $clover_name
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $clover_name)
     {
-        //
+        $clover = Clover::withTrashed()->find($clover_name);
+        $clover->symbol = $request->symbol;
+        $clover->active = $request->active;
+        $clover->leaf_num = $request->leaf_num;
+        $clover->save();
+ 
+        return redirect('/clover');
     }
 
     /**

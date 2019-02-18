@@ -10,6 +10,10 @@
             <input type="text" class="form-control" id="clover_name" name="clover_name">
           </div>
           <div class="form-group">
+            <label for="leaf_num">葉</label>
+            <input type="text" class="form-control" id="leaf_num" name="leaf_num">
+          </div>
+          <div class="form-group">
             <label for="symbol"></label>
             <textarea class="form-control" id="symbol" rows="3" name="symbol"></textarea>
           </div>

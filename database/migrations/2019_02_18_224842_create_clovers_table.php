@@ -16,7 +16,7 @@ class CreateCloversTable extends Migration
         Schema::create('my_clovers', function (Blueprint $table) {
             $table->string('clover_name')->primary();
             $table->boolean('active');
-            $table->string('symbol')->nullable();;
+            $table->string('symbol')->nullable();
             $table->dateTime('create_time');
             $table->dateTime('update_time');
         });

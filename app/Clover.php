@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Scopes\ActiveScope;
+use Illuminate\Database\Eloquent\Builder;
 
 class Clover extends Model
 {
@@ -42,4 +44,37 @@ class Clover extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+      /**
+     * モデルの「初期起動」メソッド
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new ActiveScope);
+
+        // static::addGlobalScope('active', function (Builder $builder) {
+        //     $builder->where('active', '=', 1);
+        // });
+    }
+
+    public function scopeLeaves($query)
+    {
+        return $query->where('leaf_num', '>=', 4);
+    }
+
+    /**
+     * 指定したタイプのユーザーだけを含むクエリのスコープ
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfLeaf($query, $leaf_num)
+    {
+        return $query->where('leaf_num', '>=', $leaf_num);
+    }
 }
