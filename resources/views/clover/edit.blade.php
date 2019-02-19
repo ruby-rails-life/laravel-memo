@@ -23,13 +23,16 @@
           </div>
           <div class="form-group">
             <label for="leaf_num">葉</label>
-            <input type="text" class="form-control" id="leaf_num" name="leaf_num">
+            <input type="text" class="form-control" id="leaf_num" name="leaf_num" value="{{$clover->leaf_num}}">
           </div>
           <div class="form-group">
             <label for="symbol">象徴</label>
-            <textarea class="form-control" id="symbol" rows="3" name="symbol" value="{{$clover->symbol}}"></textarea>
+            <textarea class="form-control" id="symbol" rows="3" name="symbol">
+              {{$clover->symbol}}
+            </textarea>
           </div>
           <button type="submit" class="btn btn-primary">保存</button>
+          <a href="/clover" class="btn btn-success">一覧に戻る</a>
         </form>
       </div>
     </div>

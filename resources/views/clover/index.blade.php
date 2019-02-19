@@ -15,6 +15,7 @@
             <thead>
               <tr>
                 <th>名前</th>
+                <th>編集</th>
                 <th>完全削除</th>
                 <th>Soft削除</th>
                 <th>解除</th>
@@ -26,7 +27,10 @@
             @foreach ($clovers as $clover)
               <tr>
                 <td>
-                  <a href="/clover/{{$clover->clover_name}}/edit">{{$clover->clover_name}}</a>
+                  <a href="/clover/{{$clover->clover_name}}">{{$clover->clover_name}}</a>
+                </td>
+                <td>
+                  <a href="/clover/{{$clover->clover_name}}/edit">編集</a>
                 </td>
                 <td>
                   <a href="javascript:void(0)" onclick="javascript:hard_delete('{{$clover->clover_name}}')">完全削除</a>

@@ -77,4 +77,8 @@ class Clover extends Model
     {
         return $query->where('leaf_num', '>=', $leaf_num);
     }
+
+    public function HasManies() {
+        return $this->hasMany('App\HasMany','clover_name');
+    }
 }

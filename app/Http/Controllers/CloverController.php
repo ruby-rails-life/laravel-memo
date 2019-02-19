@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Clover;
+use App\HasMany;
 use App\Scopes\ActiveScope;
 
 class CloverController extends Controller
@@ -68,7 +69,8 @@ class CloverController extends Controller
      */
     public function show($clover_name)
     {
-        //
+        $clover = Clover::withTrashed()->find($clover_name);
+        return view('clover.show', ['clover' => $clover]);
     }
 
     /**
@@ -131,5 +133,4 @@ class CloverController extends Controller
 
        return redirect('/clover');
     }
-
 }

@@ -17,3 +17,4 @@
 - DB::listen(output sql:AppServiceProvider.php)
 - Query Builder[/user]
 - Eloquent(Scope,Observe)[/clover]
+- Relation[/clover][/hasMany]
