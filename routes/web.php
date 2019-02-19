@@ -72,7 +72,9 @@ Route::group(['middleware' => ['auth']], function () {
   Route::resource('/clover','CloverController');
   Route::get('/clover/restore/{clover_name}', 'CloverController@restore');
   Route::post('/clover/delete/{clover_name}', 'CloverController@delete');
+  Route::get('/clover/editManyToMany/{clover_name}', 'CloverController@editManyToMany');
+  Route::post('/clover/updateManyToMany/{clover_name}', 'CloverController@updateManyToMany');
 
   Route::resource('/hasMany', 'HasManyController', ['only' => ['create', 'store','index']]);
-
+  Route::resource('/manyToMany', 'ManyToManyController', ['only' => ['create', 'store','index']]);
 });

@@ -26,6 +26,7 @@
                         @endcan
                         <a href="/clover" target="_blank" class="list-group-item list-group-item-action">クローバー一覧</a>
                         <a href="/hasMany" target="_blank" class="list-group-item list-group-item-action">HasMany一覧</a>
+                        <a href="/manyToMany" target="_blank" class="list-group-item list-group-item-action">ManyToMany一覧</a>
                     </div>
                 </div>
             </div>

@@ -81,4 +81,9 @@ class Clover extends Model
     public function HasManies() {
         return $this->hasMany('App\HasMany','clover_name');
     }
+
+    public function ManyToManies()
+    {
+        return $this->belongsToMany('App\ManyToMany','clover_many_to_many','clover_name','many_to_many_id');
+    }
 }

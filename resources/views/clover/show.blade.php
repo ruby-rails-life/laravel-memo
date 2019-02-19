@@ -58,6 +58,30 @@
             </tbody>
           </table>
         </div>
+
+                <hr>
+        <h4>ManyToMany</h4>
+         <a href="/manyToMany/create" class="btn btn-primary">新規追加</a>
+         <a href="/clover/editManyToMany/{{$clover->clover_name}}" class="btn btn-info">編集</a>
+         <div class="table-responsive">
+          <table class="table table-striped text-nowrap">
+            <thead>
+              <tr>
+                <th>名前</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach ($clover->manyToManies as $manyToMany)
+              <tr>
+                <td>
+                  {{$manyToMany->name}}
+                </td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>      
  
