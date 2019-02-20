@@ -75,7 +75,9 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/clover/editRelationMtm/{clover_name}', 'CloverController@editRelationMtm');
   Route::post('/clover/updateRelationMtm/{clover_name}', 'CloverController@updateRelationMtm');
 
-  Route::resource('/relationHm', 'RelationHmController', ['only' => ['create', 'store','index']]);
+  Route::resource('/relationHm', 'RelationHmController', ['only' => ['create', 'store','index','show']]);
   Route::resource('/relationMtm', 'RelationMtmController', ['only' => ['create', 'store','index']]);
-  Route::resource('/relationHmt', 'RelationHmtController', ['only' => ['create', 'store','index']]);
+  Route::resource('/relationHmt', 'RelationHmtController', ['only' => ['create', 'store','index','show']]);
+
+  Route::get('/image', 'ImageController@index');
 });

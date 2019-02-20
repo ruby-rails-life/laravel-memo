@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\RelationHmt;
 use App\RelationHm;
+use Intervention\Image\Facades\Image;
 
 class RelationHmtController extends Controller
 {
@@ -27,6 +28,26 @@ class RelationHmtController extends Controller
         $relationHmt->relation_hm_id = $request->relation_hm_id;
         $relationHmt->save();
 
+        //画像
+        $fileName = $request->image->getClientOriginalName();
+        $fileName = time()."@".$fileName;
+        $image = Image::make($request->image->getRealPath());
+ 
+        //画像リサイズ ※追加
+        $image->resize(100, null, function ($constraint) {
+              $constraint->aspectRatio();
+        });
+ 
+        $image->save(public_path() . '/images/' . $fileName);
+        $path = '/images/' . $fileName;
+        $relationHmt->image()->create(['name' => $path]);
+
         return redirect('/relationHmt');
+    }
+
+    public function show($id)
+    {
+        $relationHmt = RelationHmt::find($id);
+        return view('relationHmt.show', ['relationHmt' => $relationHmt]);
     }
 }

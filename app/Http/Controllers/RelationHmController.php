@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Clover;
 use App\RelationHm;
+use Intervention\Image\Facades\Image;
 
 class RelationHmController extends Controller
 {
@@ -29,6 +30,26 @@ class RelationHmController extends Controller
         $relationHm->clover_name = $request->clover_name;
         $relationHm->save();
 
+        //画像
+        $fileName = $request->image->getClientOriginalName();
+        $fileName = time()."@".$fileName;
+        $image = Image::make($request->image->getRealPath());
+ 
+        //画像リサイズ ※追加
+        $image->resize(100, null, function ($constraint) {
+              $constraint->aspectRatio();
+        });
+ 
+        $image->save(public_path() . '/images/' . $fileName);
+        $path = '/images/' . $fileName;
+        $relationHm->image()->create(['name' => $path]);
+
         return redirect('/relationHm');
+    }
+
+    public function show($id)
+    {
+        $relationHm = RelationHm::find($id);
+        return view('relationHm.show', ['relationHm' => $relationHm]);
     }
 }

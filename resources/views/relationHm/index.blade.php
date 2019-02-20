@@ -22,7 +22,7 @@
             @foreach ($relationHms as $relationHm)
               <tr>
                 <td>
-                  {{$relationHm->name}}
+                  <a href="/relationHm/{{$relationHm->id}}">{{$relationHm->name}}</a>
                 </td>
                 <td>
                   {{$relationHm->clover->clover_name}}

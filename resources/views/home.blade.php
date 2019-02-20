@@ -28,6 +28,7 @@
                         <a href="/relationHm" target="_blank" class="list-group-item list-group-item-action">HasMany一覧</a>
                         <a href="/relationMtm" target="_blank" class="list-group-item list-group-item-action">ManyToMany一覧</a>
                         <a href="/relationHmt" target="_blank" class="list-group-item list-group-item-action">HasManyThrough一覧</a>
+                        <a href="/image" target="_blank" class="list-group-item list-group-item-action">Polymorphic 1対1</a>
                     </div>
                 </div>
             </div>
