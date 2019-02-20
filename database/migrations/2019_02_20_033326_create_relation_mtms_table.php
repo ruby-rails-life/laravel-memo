@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHasManiesTable extends Migration
+class CreateRelationMtmsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateHasManiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('has_manies', function (Blueprint $table) {
+        Schema::create('relation_mtms', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('clover_name');
             $table->timestamps();
-            $table->foreign('clover_name')->references('clover_name')->on('my_clovers')->onDelete('cascade');
         });
     }
 
@@ -29,6 +27,6 @@ class CreateHasManiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('has_manies');
+        Schema::dropIfExists('relation_mtms');
     }
 }

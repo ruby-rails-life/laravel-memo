@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Clover;
-use App\HasMany;
-use App\ManyToMany;
+use App\RelationHm;
+use App\RelationMtm;
 use App\Scopes\ActiveScope;
 
 class CloverController extends Controller
@@ -135,28 +135,28 @@ class CloverController extends Controller
        return redirect('/clover');
     }
 
-    public function editManyToMany($clover_name)
+    public function editRelationMtm($clover_name)
     {
         $clover = Clover::withTrashed()->find($clover_name);
-        $manyToManies = ManyToMany::all();
+        $relationMtms = RelationMtm::all();
 
-        $cloverManyToManyIds = $clover->ManyToManies()->pluck('id');
+        $cloverRelationMtmIds = $clover->RelationMtms()->pluck('id');
 
-        return view('clover.editManyToMany', ['clover' => $clover, 
-            'manyToManies'=> $manyToManies,
-            'cloverManyToManyIds' => $cloverManyToManyIds
+        return view('clover.editRelationMtm', ['clover' => $clover, 
+            'relationMtms'=> $relationMtms,
+            'cloverRelationMtmIds' => $cloverRelationMtmIds
         ]);
     }
 
-    public function updateManyToMany(Request $request, $clover_name)
+    public function updateRelationMtm(Request $request, $clover_name)
     {
         $clover = Clover::withTrashed()->find($clover_name);
-        $existManyToManies = collect($clover->manyToManies()->pluck('id'));
-        $newManyToManies = collect(request()->manyToManies);
-        $addManyToManies = $newManyToManies->diff($existManyToManies);
-        $deleteManyToManies = $existManyToManies->diff($newManyToManies);
-        $clover->manyToManies()->detach($deleteManyToManies);
-        $clover->manyToManies()->attach($addManyToManies);
+        $existRelationMtms = collect($clover->relationMtms()->pluck('id'));
+        $newRelationMtms = collect(request()->relationMtms);
+        $addRelationMtms = $newRelationMtms->diff($existRelationMtms);
+        $deleteRelationMtms = $existRelationMtms->diff($newRelationMtms);
+        $clover->relationMtms()->detach($deleteRelationMtms);
+        $clover->relationMtms()->attach($addRelationMtms);
         return redirect('/clover/'. $clover_name);
     }
 }

@@ -78,12 +78,24 @@ class Clover extends Model
         return $query->where('leaf_num', '>=', $leaf_num);
     }
 
-    public function HasManies() {
-        return $this->hasMany('App\HasMany','clover_name');
+    public function RelationHms() {
+        return $this->hasMany('App\RelationHm','clover_name');
     }
 
-    public function ManyToManies()
+    public function RelationMtms()
     {
-        return $this->belongsToMany('App\ManyToMany','clover_many_to_many','clover_name','many_to_many_id');
+        return $this->belongsToMany('App\RelationMtm','clover_relation_mtm','clover_name','relation_mtm_id');
+    }
+
+    public function RelationHmts()
+    {
+        return $this->hasManyThrough(
+            'App\RelationHmt', 
+            'App\RelationHm',
+            'clover_name',
+            'relation_hm_id',
+            'clover_name',
+            'id'
+        );
     }
 }

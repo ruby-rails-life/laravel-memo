@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ManyToMany extends Model
+class RelationMtm extends Model
 {
     //
 }

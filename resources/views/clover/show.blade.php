@@ -39,7 +39,7 @@
         </div>
         <hr>
         <h4>HasMany</h4>
-         <a href="/hasMany/create" class="btn btn-primary">新規追加</a>
+         <a href="/relationHm/create" class="btn btn-primary">新規追加</a>
          <div class="table-responsive">
           <table class="table table-striped text-nowrap">
             <thead>
@@ -48,10 +48,10 @@
               </tr>
             </thead>
             <tbody>
-            @foreach ($clover->hasManies as $hasMany)
+            @foreach ($clover->relationHms as $relationHm)
               <tr>
                 <td>
-                  {{$hasMany->name}}
+                  {{$relationHm->name}}
                 </td>
               </tr>
             @endforeach
@@ -61,8 +61,8 @@
 
                 <hr>
         <h4>ManyToMany</h4>
-         <a href="/manyToMany/create" class="btn btn-primary">新規追加</a>
-         <a href="/clover/editManyToMany/{{$clover->clover_name}}" class="btn btn-info">編集</a>
+         <a href="/relationMtm/create" class="btn btn-primary">新規追加</a>
+         <a href="/clover/editRelationMtm/{{$clover->clover_name}}" class="btn btn-info">編集</a>
          <div class="table-responsive">
           <table class="table table-striped text-nowrap">
             <thead>
@@ -71,10 +71,32 @@
               </tr>
             </thead>
             <tbody>
-            @foreach ($clover->manyToManies as $manyToMany)
+            @foreach ($clover->relationMtms as $relationMtm)
               <tr>
                 <td>
-                  {{$manyToMany->name}}
+                  {{$relationMtm->name}}
+                </td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+        <h4>HasManyThrough</h4>
+         <a href="/relationHmt/create" class="btn btn-primary">新規追加</a>
+         <div class="table-responsive">
+          <table class="table table-striped text-nowrap">
+            <thead>
+              <tr>
+                <th>名前</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach ($clover->relationHmts as $relationHmt)
+              <tr>
+                <td>
+                  {{$relationHmt->name}}
                 </td>
               </tr>
             @endforeach

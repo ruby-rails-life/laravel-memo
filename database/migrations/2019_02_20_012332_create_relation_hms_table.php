@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCloverManyToManyTable extends Migration
+class CreateRelationHmsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateCloverManyToManyTable extends Migration
      */
     public function up()
     {
-        Schema::create('clover_many_to_many', function (Blueprint $table) {
+        Schema::create('relation_hms', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
             $table->string('clover_name');
-            $table->unsignedInteger('many_to_many_id');
-            $table->primary(['clover_name','many_to_many_id']);
-
-            // 外部キー制約
+            $table->timestamps();
             $table->foreign('clover_name')->references('clover_name')->on('my_clovers')->onDelete('cascade');
-            $table->foreign('many_to_many_id')->references('id')->on('many_to_manies')->onDelete('cascade');
         });
     }
 
@@ -31,6 +29,6 @@ class CreateCloverManyToManyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clover_many_to_many');
+        Schema::dropIfExists('relation_hms');
     }
 }
