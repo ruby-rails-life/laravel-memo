@@ -17,4 +17,4 @@
 - DB::listen(output sql:AppServiceProvider.php)
 - Query Builder[/user]
 - Eloquent(Scope,Observe)[/clover]
-- Relation[/clover][/relationHm][/relationMtm][/relationHmt]
+- Relation(hasMany manyToMany hasManyThrough)[/clover/{clover_name}]
