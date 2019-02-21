@@ -25,4 +25,5 @@
   - Thought -> RelationHm RelationHmt  Polymorphic 1:many
   - Category -> RelationHm RelationMtm Polymorphic many:many
 - Relation check
-  - has whereHas doesntHave whereDoesntHave [/clover]   
+  - has whereHas doesntHave whereDoesntHave [/clover] 
+--withCount [/relationHm]

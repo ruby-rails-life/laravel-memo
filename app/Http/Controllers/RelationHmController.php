@@ -13,7 +13,8 @@ class RelationHmController extends Controller
     
     public function index()
     {
-        $relationHms = RelationHm::all();
+        $relationHms = RelationHm::withCount('relationHmts')->get();
+        //$relationHms = RelationHm::all();
         return view('relationHm.index')->with(['relationHms' => $relationHms]);
     }
     

@@ -16,6 +16,7 @@
               <tr>
                 <th>名前</th>
                 <th>クローバー</th>
+                <th>RelationHmt件数</th>
               </tr>
             </thead>
             <tbody>
@@ -26,6 +27,9 @@
                 </td>
                 <td>
                   {{$relationHm->clover->clover_name}}
+                </td>
+                <td>
+                  {{$relationHm->relation_hmts_count}}
                 </td>
               </tr>
             @endforeach

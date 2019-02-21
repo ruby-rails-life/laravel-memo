@@ -10,6 +10,10 @@ class RelationHm extends Model
         return $this->belongsTo('App\Clover','clover_name','clover_name');
     }
 
+    public function RelationHmts() {
+        return $this->hasMany('App\RelationHmt');
+    }
+
     //１対１（ポリモーフィック）
     public function image()
     {
