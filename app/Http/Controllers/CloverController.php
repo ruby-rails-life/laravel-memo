@@ -24,10 +24,18 @@ class CloverController extends Controller
         //$cloves_local_scope = Clover::leaves()->orderBy('leaf_num')->get();
         $cloves_local_scope = Clover::ofLeaf(5)->get();
 
+        $clover_has = Clover::whereHas('relationHms', function ($query) {
+            $query->where('name', 'like', 'p%');
+        },'>=', 2)->get();
+        $clover_has_through = Clover::has('relationHmts')->get();
+
         return view('clover.index', [
             'clovers' => $clovers, 
             'clovers_count' => $clovers_count, 
-            'cloves_local_scope' => $cloves_local_scope]
+            'cloves_local_scope' => $cloves_local_scope,
+            'clover_has' => $clover_has,
+            'clover_has_through' => $clover_has_through
+        ]
         );
     }
 

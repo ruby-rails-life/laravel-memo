@@ -29,18 +29,20 @@ class RelationHmtController extends Controller
         $relationHmt->save();
 
         //画像
-        $fileName = $request->image->getClientOriginalName();
-        $fileName = time()."@".$fileName;
-        $image = Image::make($request->image->getRealPath());
+        if ($request->image) {
+          $fileName = $request->image->getClientOriginalName();
+          $fileName = time()."@".$fileName;
+          $image = Image::make($request->image->getRealPath());
  
-        //画像リサイズ ※追加
-        $image->resize(100, null, function ($constraint) {
+          //画像リサイズ ※追加
+          $image->resize(100, null, function ($constraint) {
               $constraint->aspectRatio();
-        });
+          });
  
-        $image->save(public_path() . '/images/' . $fileName);
-        $path = '/images/' . $fileName;
-        $relationHmt->image()->create(['name' => $path]);
+          $image->save(public_path() . '/images/' . $fileName);
+          $path = '/images/' . $fileName;
+          $relationHmt->image()->create(['name' => $path]);
+        }
 
         return redirect('/relationHmt');
     }

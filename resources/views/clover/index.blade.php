@@ -79,6 +79,54 @@
         </div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="offset-sm-2 col-sm-8">
+        <h4>Has Many Relation > num </h4>
+        <div class="table-responsive">
+          <table class="table table-striped text-nowrap">
+            <thead>
+              <tr>
+                <th>名前</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach ($clover_has as $clover)
+              <tr>
+                <td>
+                  <a href="/clover/{{$clover->clover_name}}/edit">{{$clover->clover_name}}</a>
+                </td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="offset-sm-2 col-sm-8">
+        <h4>Has Many throught Relation >= 1</h4>
+        <div class="table-responsive">
+          <table class="table table-striped text-nowrap">
+            <thead>
+              <tr>
+                <th>名前</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach ($clover_has_through as $clover)
+              <tr>
+                <td>
+                  <a href="/clover/{{$clover->clover_name}}/edit">{{$clover->clover_name}}</a>
+                </td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
    
     <div class="row">
       <div class="col-sm-12">

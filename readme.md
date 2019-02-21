@@ -24,3 +24,5 @@
   - Image -> RelationHm RelationHmt Polymorphic 1:1
   - Thought -> RelationHm RelationHmt  Polymorphic 1:many
   - Category -> RelationHm RelationMtm Polymorphic many:many
+- Relation check
+  - has whereHas doesntHave whereDoesntHave [/clover]   
