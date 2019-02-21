@@ -17,8 +17,41 @@
             画像
           </div>
           <div class="col-sm-10">
+            @if($relationHmt->image)
             <img src="{{$relationHmt->image->name}}">
+            @endif
           </div>
+        </div>
+
+        <hr>
+        <h4>Thoughts新規追加</h4>
+        <form method="post" action="/relationHmt/createThought/{{$relationHmt->id}}">
+           {{ csrf_field() }}
+          <div class="form-group">
+            <label for="content"></label>
+            <textarea class="form-control" id="content" rows="3" name="content"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">新規追加</button>
+        </form>
+<hr>
+        <h4>Thoughts一覧</h4>
+        <div class="table-responsive">
+          <table class="table table-striped text-nowrap">
+            <thead>
+              <tr>
+                <th>Content</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach ($relationHmt->thoughts as $thought)
+              <tr>
+                <td>
+                  {{$thought->content}}
+                </td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
         </div>
       </div>
     </div>      

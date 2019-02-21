@@ -52,4 +52,11 @@ class RelationHmController extends Controller
         $relationHm = RelationHm::find($id);
         return view('relationHm.show', ['relationHm' => $relationHm]);
     }
+
+    public function createThought(Request $request,$id) {
+        $relationHm = RelationHm::find($id);
+        $relationHm->thoughts()->create(['content' => $request->content]);
+
+        return redirect('/relationHm/' . $id);
+    }
 }

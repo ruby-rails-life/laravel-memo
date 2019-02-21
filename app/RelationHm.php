@@ -15,4 +15,10 @@ class RelationHm extends Model
     {
         return $this->morphOne('App\Image', 'imageable');
     }
+
+    //１対多（ポリモーフィック）
+    public function thoughts()
+    {
+        return $this->morphMany('App\Thought', 'thoughtable');
+    }
 }

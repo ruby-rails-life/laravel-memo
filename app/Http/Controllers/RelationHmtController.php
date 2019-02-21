@@ -50,4 +50,11 @@ class RelationHmtController extends Controller
         $relationHmt = RelationHmt::find($id);
         return view('relationHmt.show', ['relationHmt' => $relationHmt]);
     }
+
+    public function createThought(Request $request,$id) {
+        $relationHmt = RelationHmt::find($id);
+        $relationHmt->thoughts()->create(['content' => $request->content]);
+
+        return redirect('/relationHmt/' . $id);
+    }
 }
