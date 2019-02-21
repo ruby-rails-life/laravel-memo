@@ -18,9 +18,9 @@
 - Query Builder[/user]
 - Eloquent(Scope,Observe)[/clover]
 - Relation(hasMany manyToMany hasManyThrough Polymorphic)[/clover/{clover_name}]
-  - clover -> RelationHm hasMany
-  - clover -> RelationMtm manyToMany
-  - clover -> RelationHmt hasManyThrough
+  - Clover -> RelationHm hasMany
+  - Clover -> RelationMtm manyToMany
+  - Clover -> RelationHmt hasManyThrough
   - Image -> RelationHm RelationHmt Polymorphic 1:1
   - Thought -> RelationHm RelationHmt  Polymorphic 1:many
-  - category -> RelationHm RelationMtm Polymorphic many:many
+  - Category -> RelationHm RelationMtm Polymorphic many:many
