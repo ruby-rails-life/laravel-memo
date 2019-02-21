@@ -11,7 +11,9 @@ class RelationHmtController extends Controller
 {
     public function index()
     {
-        $relationHmts = RelationHmt::orderBy('relation_hm_id')->get();
+        //$relationHmts = RelationHmt::orderBy('relation_hm_id')->get();
+        $relationHmts = RelationHmt::with('relationHm')->orderBy('relation_hm_id')->get();
+
         return view('relationHmt.index')->with(['relationHmts' => $relationHmts]);
     }
     

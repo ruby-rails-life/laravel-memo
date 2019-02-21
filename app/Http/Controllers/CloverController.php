@@ -80,6 +80,16 @@ class CloverController extends Controller
     public function show($clover_name)
     {
         $clover = Clover::withTrashed()->find($clover_name);
+        $clover->loadMissing(['relationHms' => function ($query) {
+                $query->orderBy('name', 'asc');
+            },
+            'relationHmts' => function ($query) {
+                $query->orderBy('name', 'asc');
+            },
+            'relationMtms' => function ($query) {
+                $query->orderBy('name', 'asc');
+            }
+        ]);
         return view('clover.show', ['clover' => $clover]);
     }
 

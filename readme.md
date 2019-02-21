@@ -27,3 +27,6 @@
 - Relation check
   - has whereHas doesntHave whereDoesntHave [/clover] 
 - withCount [/clover]
+- Eager Loading
+  - ::with(relation) [/relationHmt]
+  - Lazy Eager Loading:load(relation) loadMissing(relation) [/clover/{clover_name}]
