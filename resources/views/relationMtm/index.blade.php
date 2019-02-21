@@ -21,7 +21,7 @@
             @foreach ($relationMtms as $relationMtm)
               <tr>
                 <td>
-                  {{$relationMtm->name}}
+                  <a href="/relationMtm/{{$relationMtm->id}}">{{$relationMtm->name}}</a>
                 </td>
               </tr>
             @endforeach

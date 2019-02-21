@@ -78,11 +78,12 @@ Route::group(['middleware' => ['auth']], function () {
   Route::resource('/relationHm', 'RelationHmController', ['only' => ['create', 'store','index','show']]);
   Route::post('/relationHm/createThought/{id}', 'RelationHmController@createThought');
 
-  Route::resource('/relationMtm', 'RelationMtmController', ['only' => ['create', 'store','index']]);
+  Route::resource('/relationMtm', 'RelationMtmController', ['only' => ['create', 'store','index','show']]);
   
   Route::resource('/relationHmt', 'RelationHmtController', ['only' => ['create', 'store','index','show']]);
   Route::post('/relationHmt/createThought/{id}', 'RelationHmtController@createThought');
 
   Route::get('/image', 'ImageController@index');
   Route::get('/thought', 'ThoughtController@index');
+  Route::get('/category', 'CategoryController@index');
 });

@@ -24,11 +24,13 @@
                         @can('admin', App\User::class)
                         <a href="/user" target="_blank" class="list-group-item list-group-item-action">ユーザ一覧</a>
                         @endcan
+                        <a href="/category" target="_blank" class="list-group-item list-group-item-action">Category一覧</a>
                         <a href="/clover" target="_blank" class="list-group-item list-group-item-action">クローバー一覧</a>
                         <a href="/relationHm" target="_blank" class="list-group-item list-group-item-action">HasMany一覧</a>
                         <a href="/relationMtm" target="_blank" class="list-group-item list-group-item-action">ManyToMany一覧</a>
                         <a href="/relationHmt" target="_blank" class="list-group-item list-group-item-action">HasManyThrough一覧</a>
-                        <a href="/image" target="_blank" class="list-group-item list-group-item-action">Polymorphic 1対1</a>
+                        <a href="/image" target="_blank" class="list-group-item list-group-item-action">Polymorphic 1:1</a>
+                        <a href="/thought" target="_blank" class="list-group-item list-group-item-action">Polymorphic 1:many</a>
                     </div>
                 </div>
             </div>

@@ -53,6 +53,27 @@
           </table>
         </div>
 
+        <hr>
+        <h4>Categories一覧</h4>
+        <div class="table-responsive">
+          <table class="table table-striped text-nowrap">
+            <thead>
+              <tr>
+                <th>name</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach ($relationHm->categories as $category)
+              <tr>
+                <td>
+                  {{$category->name}}
+                </td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>      
  

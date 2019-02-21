@@ -25,4 +25,10 @@ class RelationMtmController extends Controller
 
         return redirect('/relationMtm');
     }
+
+    public function show($id)
+    {
+        $relationMtm = RelationMtm::find($id);
+        return view('relationMtm.show', ['relationMtm' => $relationMtm]);
+    }
 }

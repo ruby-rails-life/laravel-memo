@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Clover;
+use App\Category;
 use App\RelationHm;
 use Intervention\Image\Facades\Image;
 
@@ -20,8 +21,8 @@ class RelationHmController extends Controller
     {
         $clovers = Clover::orderBy('leaf_num','asc')->pluck('clover_name');
         //$clovers = $clovers -> prepend('クローバー', '');
-
-        return view('relationHm.create')->with(['clovers' => $clovers]);
+        $categories = Category::orderBy('name','asc')->pluck('name', 'id');
+        return view('relationHm.create')->with(['clovers' => $clovers, 'categories' => $categories]);
     }
 
     public function store(Request $request) {
@@ -31,6 +32,7 @@ class RelationHmController extends Controller
         $relationHm->save();
 
         //画像
+        if ($request->image) {
         $fileName = $request->image->getClientOriginalName();
         $fileName = time()."@".$fileName;
         $image = Image::make($request->image->getRealPath());
@@ -43,7 +45,11 @@ class RelationHmController extends Controller
         $image->save(public_path() . '/images/' . $fileName);
         $path = '/images/' . $fileName;
         $relationHm->image()->create(['name' => $path]);
+        } 
 
+        //Category
+        $categories = $request->categories;
+        $relationHm->categories()->attach($categories);  
         return redirect('/relationHm');
     }
 
