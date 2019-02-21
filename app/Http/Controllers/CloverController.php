@@ -17,7 +17,8 @@ class CloverController extends Controller
      */
     public function index()
     {
-        $clovers = Clover::withTrashed()->get();
+        //$clovers = Clover::withTrashed()->get();
+        $clovers = Clover::withTrashed()->select(['clover_name', 'deleted_at'])->withCount(['relationHms','relationHmts'])->get();
 
         $clovers_count = Clover::withoutGlobalScope(ActiveScope::class)->withTrashed()->count();
 

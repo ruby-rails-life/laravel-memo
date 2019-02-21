@@ -20,7 +20,8 @@
                 <th>Soft削除</th>
                 <th>解除</th>
                 <th>削除日付</th>
-                <th>象徵</th>
+                <th>RelationHms件数</th>
+                <th>RelationHmts件数</th>
               </tr>
             </thead>
             <tbody>
@@ -43,10 +44,13 @@
                 </td>
                 <td>
                   {{$clover->deleted_at}}
-                </td> 
-                <td>
-                  {{$clover->symbol}}
                 </td>
+                <td>
+                  {{$clover->relation_hms_count}}
+                </td>
+                <td>
+                  {{$clover->relation_hmts_count}}
+                </td> 
               </tr>
             @endforeach
             </tbody>
