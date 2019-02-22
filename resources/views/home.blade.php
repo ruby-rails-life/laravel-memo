@@ -29,6 +29,7 @@
                         <a href="/relationHm" target="_blank" class="list-group-item list-group-item-action">HasMany一覧</a>
                         <a href="/relationMtm" target="_blank" class="list-group-item list-group-item-action">ManyToMany一覧</a>
                         <a href="/relationHmt" target="_blank" class="list-group-item list-group-item-action">HasManyThrough一覧</a>
+                        <a href="/relationNullable" target="_blank" class="list-group-item list-group-item-action">0..1一覧</a>
                         <a href="/image" target="_blank" class="list-group-item list-group-item-action">Polymorphic 1:1</a>
                         <a href="/thought" target="_blank" class="list-group-item list-group-item-action">Polymorphic 1:many</a>
                     </div>

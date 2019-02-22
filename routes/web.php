@@ -83,6 +83,10 @@ Route::group(['middleware' => ['auth']], function () {
   Route::resource('/relationHmt', 'RelationHmtController', ['only' => ['create', 'store','index','show']]);
   Route::post('/relationHmt/createThought/{id}', 'RelationHmtController@createThought');
 
+  Route::resource('/relationNullable', 'RelationNullableController');
+  Route::post('/relationNullable/dissociate/{id}', 'RelationNullableController@dissociate');
+
+
   Route::get('/image', 'ImageController@index');
   Route::get('/thought', 'ThoughtController@index');
   Route::get('/category', 'CategoryController@index');

@@ -11,4 +11,8 @@ class RelationMtm extends Model
     {
         return $this->morphToMany('App\Category', 'categorizable');
     }
+
+    public function RelationNullables() {
+        return $this->hasMany('App\RelationNullable');
+    }
 }
