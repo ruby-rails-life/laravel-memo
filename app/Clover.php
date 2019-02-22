@@ -45,7 +45,12 @@ class Clover extends Model
      */
     protected $dates = ['deleted_at'];
 
-      /**
+    protected $casts = [
+        'active' => 'boolean',
+        'create_time' => 'datetime:Y-m-d',
+    ];
+
+    /**
      * モデルの「初期起動」メソッド
      *
      * @return void

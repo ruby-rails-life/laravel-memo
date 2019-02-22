@@ -31,4 +31,6 @@
   - ::with(relation) [/relationHmt]
   - Lazy Eager Loading:load(relation) loadMissing(relation) [/clover/{clover_name}]
 - Touching Parent Timestamps:[/RelationNullable]
+- Accessors & Mutators[/RelationNullable]
+- Attribute Casting[/clover/{clover_name}]
   

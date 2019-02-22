@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="row">
-      <div class="offset-sm-2 col-sm-4">
+      <div class="offset-sm-2 col-sm-6">
         <h4>クローバー詳細</h4>
         <a href="/clover/{{$clover->clover_name}}/edit" class="btn btn-primary">編集</a>
         <a href="/clover" class="btn btn-success">一覧に戻る</a>
@@ -27,6 +27,14 @@
           </div>
           <div class="col-sm-10">
             {{$clover->active}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2">
+            create_time
+          </div>
+          <div class="col-sm-10">
+            {{$clover->create_time}}
           </div>
         </div>
         <div class="row">

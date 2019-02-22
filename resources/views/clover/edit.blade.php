@@ -10,13 +10,13 @@
             <span>{{$clover->clover_name}}</span>
           </div>  
           <div class="form-check">
-  　　　　　　　　　<input class="form-check-input" type="radio" name="active" id="active1" value="1" @if ($clover->active == 1) checked @endif>
+  　　　　　　　　　<input class="form-check-input" type="radio" name="active" id="active1" value="1" @if ($clover->active) checked @endif>
              <label class="form-check-label" for="active1">
                Active
              </label>
           </div>
           <div class="form-check">
-  　　　　　　　　　<input class="form-check-input" type="radio" name="active" id="active2" value="0" @if ($clover->active == 0) checked @endif>
+  　　　　　　　　　<input class="form-check-input" type="radio" name="active" id="active2" value="0" @if (!$clover->active) checked @endif>
              <label class="form-check-label" for="active2">
                Disabled
              </label>
