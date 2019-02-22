@@ -25,6 +25,8 @@ class Clover extends Model
     const CREATED_AT = 'create_time';
     const UPDATED_AT = 'update_time';
 
+    protected $visible = ['clover_name'];
+
     protected $attributes = [
         'active' => true,
     ];
@@ -49,6 +51,13 @@ class Clover extends Model
         'active' => 'boolean',
         'create_time' => 'datetime:Y-m-d',
     ];
+
+    protected $appends = ['is_active'];
+
+    public function getIsActiveAttribute()
+    {
+        return $this->attributes['active'] ? 'yes':'no';
+    }
 
     /**
      * モデルの「初期起動」メソッド

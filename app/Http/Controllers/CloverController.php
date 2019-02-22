@@ -178,4 +178,12 @@ class CloverController extends Controller
         $clover->relationMtms()->attach($addRelationMtms);
         return redirect('/clover/'. $clover_name);
     }
+
+    public function getJson(){
+        return Clover::withTrashed()->get()->toJson();
+    }
+
+     public function getMakeJson(){
+        return Clover::withTrashed()->get()->makeVisible(['is_active','update_time'])->toJson();
+    }
 }

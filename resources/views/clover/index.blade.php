@@ -1,9 +1,15 @@
 @extends('layouts.app')
 @section('content')
 
-    <div class="row">
-      <div class="offset-sm-2 col-sm-8">
+    <div class="row mt-3">
+      <div class="offset-sm-2 col-sm-1">
         <p><a href="/clover/create" class="btn btn-success">新規</a></p> 
+      </div>
+      <div class="col-sm-1">
+        <p><a href="/clover_json" target='_blank' class="btn btn-success">JSON</a></p> 
+      </div>
+      <div class="col-sm-2">
+        <p><a href="/clover_makejson" target='_blank' class="btn btn-success">Make JSON</a></p> 
       </div>
     </div>    
 

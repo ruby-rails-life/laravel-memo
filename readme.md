@@ -33,4 +33,7 @@
 - Touching Parent Timestamps:[/RelationNullable]
 - Accessors & Mutators[/RelationNullable]
 - Attribute Casting[/clover/{clover_name}]
+- Serializing
+  - toJson[/clover_json]
+  - makeVisible[/clover_makejson]
   

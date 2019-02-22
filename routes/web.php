@@ -74,6 +74,9 @@ Route::group(['middleware' => ['auth']], function () {
   Route::post('/clover/delete/{clover_name}', 'CloverController@delete');
   Route::get('/clover/editRelationMtm/{clover_name}', 'CloverController@editRelationMtm');
   Route::post('/clover/updateRelationMtm/{clover_name}', 'CloverController@updateRelationMtm');
+  Route::get('/clover_json', 'CloverController@getJson');
+  Route::get('/clover_makejson', 'CloverController@getMakeJson');
+
 
   Route::resource('/relationHm', 'RelationHmController', ['only' => ['create', 'store','index','show']]);
   Route::post('/relationHm/createThought/{id}', 'RelationHmController@createThought');

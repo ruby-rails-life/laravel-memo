@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Observers\CloverObserver;
 use App\Clover;
+use Illuminate\Support\Carbon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,6 +38,11 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Clover::observe(CloverObserver::class);
+
+        //アプリケーション上のすべての日付と時刻が、Carbonによりどのようにシリアライズされるかをカスタマイズする
+        // Carbon::serializeUsing(function ($carbon) {
+        //     return $carbon->format('y');
+        // });
     }
 
     /**
