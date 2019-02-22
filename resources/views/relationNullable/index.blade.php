@@ -16,6 +16,7 @@
               <tr>
                 <th>名前</th>
                 <th>RelationMtm</th>
+                <th>NameUpdatedAt</th>
                 <th>Edit</th>
                 <th>dissociate</th>
               </tr>
@@ -31,6 +32,9 @@
                  {{$relationNullable->relationMtm->name}}
                  @endif
                 </td>
+                <td>
+                  {{$relationNullable->name_updated_at}}
+                </td>  
                 <td>
                   <a href="/relationNullable/{{$relationNullable->id}}/edit">Edit</a>
                 </td>  
