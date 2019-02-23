@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Events\PostCreated;
 use Validator;
+use App\Jobs\ProcessPost;
 
 class PostController extends Controller
 {
@@ -115,7 +116,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('board.edit', ['post' => $post]);
     }
 
     /**
@@ -127,7 +128,42 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+      $rules = [
+        'title' => 'required',
+        'content'=>'required',
+        'category_id' => 'required',
+      ];
+
+      $messages = array(
+        'title.required' => 'タイトルを正しく入力してください。',
+        'content.required' => '本文を正しく入力してください。',
+        'category_id.required' => 'カテゴリーを選択してください。',
+      );
+
+      $validator = Validator::make($request->all(), $rules, $messages);
+
+      if ($validator->passes()) {
+        $post = Post::find($post->id);
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->category_id = $request->category_id;
+        $post->save();
+
+        //ProcessPost::dispatch($post);
+        //遅延ディスパッチ
+         ProcessPost::dispatch($post)
+                 ->delay(now()->addMinutes(3))->onConnection('database');
+        
+        //ジョブはキューされずに現在のプロセスで即時実行
+        //ProcessPost::dispatchNow($post);
+
+        return redirect('/posts')
+          ->with('message', '投稿が完了しました。');
+      }else{
+        return redirect('/posts/' .$post->id.'/edit')
+          ->withErrors($validator)
+          ->withInput();
+      }
     }
 
     /**
