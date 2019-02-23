@@ -18,6 +18,19 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        'App\Events\PostCreated' => [
+            'App\Listeners\SendCreationNotification',
+        ],
+    ];
+
+    /**
+     * 登録する購読クラス
+     *
+     * @var array
+     */
+    protected $subscribe = [
+        'App\Listeners\PostEventSubscriber',
     ];
 
     /**

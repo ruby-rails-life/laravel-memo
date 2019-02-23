@@ -39,5 +39,6 @@
 - Resource & Collection [App\Http\Resource]
 - Pagination[/relationNullable]
   - Customize Pagination View: Paginator::defaultView('view-name');
+- Event & Listener & Subscriber[posts/create]  
 
   

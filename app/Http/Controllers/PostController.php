@@ -6,6 +6,7 @@ use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Events\PostCreated;
 use Validator;
 
 class PostController extends Controller
@@ -77,6 +78,9 @@ class PostController extends Controller
         $post->comment_count = 0;
         $post->user_id = Auth::user()->id;
         $post->save();
+
+        event(new PostCreated($post));
+
         return redirect('/posts/create')
           ->with('message', '投稿が完了しました。');
       }else{
