@@ -64,7 +64,6 @@ class AppServiceProvider extends ServiceProvider
             // $event->connectionName
             // $event->job
             // $event->job->payload()
-            Log:info('before job:');
         });
 
         Queue::after(function (JobProcessed $event) {
