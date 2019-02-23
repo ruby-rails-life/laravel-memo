@@ -2,8 +2,11 @@
 @section('content')
 
     <div class="row">
-      <div class="offset-sm-2 col-sm-8">
+      <div class="offset-sm-2 col-sm-1">
         <p><a href="/relationMtm/create" class="btn btn-success">新規</a></p> 
+      </div>
+      <div class="col-sm-2">
+        <p><a href="/relationMtm_res" class="btn btn-success">Resource</a></p> 
       </div>
     </div>    
 

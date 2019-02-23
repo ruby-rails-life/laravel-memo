@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\RelationMtm;
+use App\Http\Resources\RelationMtm as RelMtmResource;
 
 class RelationMtmController extends Controller
 {
@@ -30,5 +31,12 @@ class RelationMtmController extends Controller
     {
         $relationMtm = RelationMtm::find($id);
         return view('relationMtm.show', ['relationMtm' => $relationMtm]);
+    }
+
+    public function relationMtm_res()
+    {
+        $relationMtm = RelationMtm::find(3);
+        $relationMtm->loadMissing('relationNullables');
+        return new RelMtmResource($relationMtm);
     }
 }

@@ -36,4 +36,5 @@
 - Serializing
   - toJson[/clover_json]
   - makeVisible[/clover_makejson]
+- Resource & Collection [App\Http\Resource]  
   

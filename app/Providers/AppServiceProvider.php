@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use App\Observers\CloverObserver;
 use App\Clover;
 use Illuminate\Support\Carbon;
+use Illuminate\Http\Resources\Json\Resource;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,6 +44,8 @@ class AppServiceProvider extends ServiceProvider
         // Carbon::serializeUsing(function ($carbon) {
         //     return $carbon->format('y');
         // });
+
+        Resource::withoutWrapping();
     }
 
     /**

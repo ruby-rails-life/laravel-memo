@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use App\RelationNullable;
+use App\Http\Resources\RelationNullable as RelNullResource;
+use App\Http\Resources\RelationNullableCollection as RelNullCollection;
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -82,14 +84,28 @@ Route::group(['middleware' => ['auth']], function () {
   Route::post('/relationHm/createThought/{id}', 'RelationHmController@createThought');
 
   Route::resource('/relationMtm', 'RelationMtmController', ['only' => ['create', 'store','index','show']]);
+  Route::get('/relationMtm_res','RelationMtmController@relationMtm_res');
   
   Route::resource('/relationHmt', 'RelationHmtController', ['only' => ['create', 'store','index','show']]);
   Route::post('/relationHmt/createThought/{id}', 'RelationHmtController@createThought');
 
   Route::resource('/relationNullable', 'RelationNullableController');
   Route::post('/relationNullable/dissociate/{id}', 'RelationNullableController@dissociate');
-
-
+  Route::get('/relationNullable_res', function () {
+    return (new RelNullResource(RelationNullable::find(1)))
+        ->response()
+        ->header('X-Value', 'True');
+    //return new RelNullResource(RelationNullable::all());
+  });
+  Route::get('/relationNullable_col', function () {
+    //return new RelNullCollection(RelationNullable::all());
+    //return new RelNullCollection(RelationNullable::paginate());
+    return (new RelNullCollection(RelationNullable::all()))
+                ->additional(['meta' => [
+                    'hello' => 'world',
+                ]]);
+  });
+ 
   Route::get('/image', 'ImageController@index');
   Route::get('/thought', 'ThoughtController@index');
   Route::get('/category', 'CategoryController@index');

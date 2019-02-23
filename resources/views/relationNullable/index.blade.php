@@ -1,9 +1,15 @@
 @extends('layouts.app')
 @section('content')
 
-    <div class="row">
-      <div class="offset-sm-2 col-sm-8">
+    <div class="row mt-3">
+      <div class="offset-sm-2 col-sm-1">
         <p><a href="/relationNullable/create" class="btn btn-success">新規</a></p> 
+      </div>
+      <div class="col-sm-2">
+        <p><a href="/relationNullable_res" class="btn btn-success">Resource</a></p> 
+      </div>
+      <div class="col-sm-2">
+        <p><a href="/relationNullable_col" class="btn btn-success">Collection</a></p> 
       </div>
     </div>    
 
