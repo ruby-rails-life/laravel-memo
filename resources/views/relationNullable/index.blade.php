@@ -52,6 +52,10 @@
             </tbody>
           </table>
         </div>
+        {{ $relationNullables->links() }}
+        {{ $relationNullables->appends(['sort' => 'name'])->links() }}
+        {{ $relationNullables->fragment('foo')->links() }}
+        {{ $relationNullables->onEachSide(5)->links() }}
       </div>
     </div>
 

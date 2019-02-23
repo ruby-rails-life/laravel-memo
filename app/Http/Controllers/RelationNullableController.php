@@ -10,7 +10,12 @@ class RelationNullableController extends Controller
 {
     public function index()
     {
-        $relationNullables = RelationNullable::all();
+        //$relationNullables = RelationNullable::all();
+        //$relationNullables = RelationNullable::simplePaginate(2);
+        $relationNullables = RelationNullable::Paginate(2);
+        //ペジネーターがリンクを生成するときに使用するURIをカスタマイズ
+        //$relationNullables->withPath('custom/url');
+        
         return view('relationNullable.index')->with(['relationNullables' => $relationNullables]);
     }
     

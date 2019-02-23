@@ -11,6 +11,7 @@ use App\Observers\CloverObserver;
 use App\Clover;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -46,6 +47,10 @@ class AppServiceProvider extends ServiceProvider
         // });
 
         Resource::withoutWrapping();
+
+        //デフォルトのペジネーションビューとして、他のファイルを指定したい場合
+        //Paginator::defaultView('view-name');
+        //Paginator::defaultSimpleView('view-name');
     }
 
     /**

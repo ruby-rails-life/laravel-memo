@@ -36,5 +36,8 @@
 - Serializing
   - toJson[/clover_json]
   - makeVisible[/clover_makejson]
-- Resource & Collection [App\Http\Resource]  
+- Resource & Collection [App\Http\Resource]
+- Pagination[/relationNullable]
+  - Customize Pagination View: Paginator::defaultView('view-name');
+
   
