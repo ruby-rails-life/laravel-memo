@@ -30,6 +30,8 @@ class ProcessPost implements ShouldQueue
      */
     public $timeout = 120;
 
+    public $deleteWhenMissingModels = true;
+
     /**
      * Create a new job instance.
      *
@@ -48,5 +50,16 @@ class ProcessPost implements ShouldQueue
     public function handle()
     {
         Log::info('Post Created From ProcessPost job:' . $this->post);
+    }
+
+    /**
+     * 失敗したジョブの処理
+     *
+     * @param  Exception  $exception
+     * @return void
+     */
+    public function failed(Exception $exception)
+    {
+        // 失敗の通知をユーザーへ送るなど…
     }
 }

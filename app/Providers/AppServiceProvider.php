@@ -12,6 +12,8 @@ use App\Clover;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Queue\Events\JobFailed;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -51,6 +53,25 @@ class AppServiceProvider extends ServiceProvider
         //デフォルトのペジネーションビューとして、他のファイルを指定したい場合
         //Paginator::defaultView('view-name');
         //Paginator::defaultSimpleView('view-name');
+
+        Queue::failing(function (JobFailed $event) {
+            // $event->connectionName
+            // $event->job
+            // $event->exception
+        });
+
+        Queue::before(function (JobProcessing $event) {
+            // $event->connectionName
+            // $event->job
+            // $event->job->payload()
+            Log:info('before job:');
+        });
+
+        Queue::after(function (JobProcessed $event) {
+            // $event->connectionName
+            // $event->job
+            // $event->job->payload()
+        });
     }
 
     /**
