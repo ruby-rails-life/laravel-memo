@@ -41,5 +41,6 @@
   - Customize Pagination View: Paginator::defaultView('view-name');
 - Event & Listener & Subscriber[posts/create]
 - Queue(ProcessPost job):[/posts/{$id}]  
+- File Storage[/file]
 
   

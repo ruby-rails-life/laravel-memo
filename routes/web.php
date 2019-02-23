@@ -109,4 +109,6 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/image', 'ImageController@index');
   Route::get('/thought', 'ThoughtController@index');
   Route::get('/category', 'CategoryController@index');
+
+  Route::get('/file', 'FileController@index');  
 });

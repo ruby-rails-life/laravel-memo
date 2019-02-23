@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use App\Photo;
+use Illuminate\Support\Facades\Storage;
 
 class PhotosController extends Controller
 {
@@ -53,8 +54,11 @@ class PhotosController extends Controller
               $constraint->aspectRatio();
         });
  
-        $image->save(public_path() . '/images/' . $fileName);
-        $path = '/images/' . $fileName;
+        // $image->save(storage_path() . '/images/' . $fileName);
+        // $path = '/images/' . $fileName;
+        $path = Storage::disk('public')->putFileAs(
+            'images', $request->file('fileName'), $fileName
+        );
  
         //↓ 追加 ↓
         $photo = new Photo();

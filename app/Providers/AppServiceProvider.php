@@ -54,23 +54,29 @@ class AppServiceProvider extends ServiceProvider
         //Paginator::defaultView('view-name');
         //Paginator::defaultSimpleView('view-name');
 
-        Queue::failing(function (JobFailed $event) {
-            // $event->connectionName
-            // $event->job
-            // $event->exception
-        });
+        // Queue::failing(function (JobFailed $event) {
+        //     // $event->connectionName
+        //     // $event->job
+        //     // $event->exception
+        // });
 
-        Queue::before(function (JobProcessing $event) {
-            // $event->connectionName
-            // $event->job
-            // $event->job->payload()
-        });
+        // Queue::before(function (JobProcessing $event) {
+        //     // $event->connectionName
+        //     // $event->job
+        //     // $event->job->payload()
+        // });
 
-        Queue::after(function (JobProcessed $event) {
-            // $event->connectionName
-            // $event->job
-            // $event->job->payload()
-        });
+        // Queue::after(function (JobProcessed $event) {
+        //     // $event->connectionName
+        //     // $event->job
+        //     // $event->job->payload()
+        // });
+
+        // Queue::looping(function () {
+        //     while (DB::transactionLevel() > 0) {
+        //         DB::rollBack();
+        //     }
+        // });
     }
 
     /**
