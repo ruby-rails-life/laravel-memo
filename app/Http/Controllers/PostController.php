@@ -176,7 +176,7 @@ class PostController extends Controller
         // return redirect('/posts/' .$post->id.'/edit')
         //   ->withErrors($validator)
         //   ->withInput();
-        return back()->withErrors($validator)->withInput();
+        return redirect()->back()->withErrors($validator)->withInput();
       }
     }
 
