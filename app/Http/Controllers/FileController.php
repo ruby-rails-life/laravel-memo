@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Exceptions\MyException;
 
 class FileController extends Controller
 {
     public function index()
     {
+        //report(new MyException('My Exception***')); ;
+        //throw new MyException('My Exception***');
+
         $fileName = 'xiaoqiankun.jpg';
     	// //return Storage::get($fileName);
     	$data = [];
