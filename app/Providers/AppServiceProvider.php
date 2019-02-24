@@ -15,6 +15,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -89,6 +90,10 @@ class AppServiceProvider extends ServiceProvider
         // View::composer('*', function ($view) {
         //     $view->with('count', Clover::count());
         // });
+
+        Validator::extend('bar', function ($attribute, $value, $parameters, $validator) {
+            return ($value != 'bar' && $value != 'BAR');
+        });
     }
 
     /**

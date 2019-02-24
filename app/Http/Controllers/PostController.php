@@ -141,6 +141,7 @@ class PostController extends Controller
                     $fail($attribute.'(FOO) is invalid.');
                 }
             },
+            'bar'
         ],
         'content'=>'required',
         'category_id' => 'required',

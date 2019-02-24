@@ -9,6 +9,8 @@ return [
 
     'uppercase' => 'The :attribute must be uppercase.',
 
+    'bar' => ':attributeに、barを入力することはできません ',
+
     'attributes' => [
     	'content' => '本文', 
     	'category_id' => 'カテゴリ'
