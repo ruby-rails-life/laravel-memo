@@ -5,8 +5,11 @@ return [
 
     'kana' => ':attributeはひらがなで入力をしてください。',
 
+    'unique' => ':attribute はすでに存在する',
+
+    'uppercase' => 'The :attribute must be uppercase.',
+
     'attributes' => [
-    	'title' => 'タイトル', 
     	'content' => '本文', 
     	'category_id' => 'カテゴリ'
     ],

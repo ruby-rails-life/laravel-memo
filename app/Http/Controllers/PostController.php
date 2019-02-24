@@ -10,6 +10,7 @@ use App\Events\PostCreated;
 use Validator;
 use App\Jobs\ProcessPost;
 use App\Http\Requests\StorePost;
+use App\Rules\Uppercase;
 
 class PostController extends Controller
 {
@@ -131,7 +132,16 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
       $rules = [
-        'title' => 'required',
+        'title' => [
+            'required', 
+            'string', 
+            new Uppercase,
+            function ($attribute, $value, $fail) {
+                if ($value === 'FOO') {
+                    $fail($attribute.'(FOO) is invalid.');
+                }
+            },
+        ],
         'content'=>'required',
         'category_id' => 'required',
       ];

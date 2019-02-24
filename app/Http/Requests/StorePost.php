@@ -19,6 +19,18 @@ class StorePost extends FormRequest
     }
 
     /**
+     * バリデーションエラーのカスタム属性の取得
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'title' => 'new title',
+        ];
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -26,7 +38,7 @@ class StorePost extends FormRequest
     public function rules()
     {
         return [
-        'title' => 'required|kana',
+        'title' => 'required|kana|unique:posts',
         'content'=>'required',
         'category_id' => 'required',
         ];
@@ -40,9 +52,9 @@ class StorePost extends FormRequest
     public function messages()
     {
         return [
-        'title.required' => 'タイトルを正しく入力してください。',
-        'content.required' => '本文を正しく入力してください。',
-        'category_id.required' => 'カテゴリーを選択してください。',
+        // 'title.required' => 'タイトルを正しく入力してください。',
+        // 'content.required' => '本文を正しく入力してください。',
+        // 'category_id.required' => 'カテゴリーを選択してください。',
         ];
     }
 
