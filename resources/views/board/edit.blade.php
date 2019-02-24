@@ -18,7 +18,7 @@
   <div class="form-group">
    <label for="title" class="">タイトル</label>
    <div class="">
-    <input type="text" class="col-sm-12" name="title" value="{{$post->title}}">
+    <input type="text" class="col-sm-12" name="title" value="{{old('title', $post->title)}}">
     @if($errors->has('title')) 
     <span class="text-danger">{{ $errors->first('title') }}</span> 
     @endif
@@ -37,7 +37,7 @@
   <div class="form-group">
    <label for="content" class="">本文</label>
     <div class="">
-     <textarea class="col-sm-12" name="content">{{$post->content}}</textarea>
+     <textarea class="col-sm-12" name="content">{{old('content', $post->content)}}</textarea>
     </div>
    </div>
    <div class="form-group">
