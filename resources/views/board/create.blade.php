@@ -18,6 +18,9 @@
    <label for="title" class="">タイトル</label>
    <div class="">
     <input type="text" class="col-sm-12" name="title">
+    @if($errors->has('title')) 
+    <span class="text-danger">{{ $errors->first('title') }}</span> 
+    @endif
    </div>
   </div>
   <div class="form-group">

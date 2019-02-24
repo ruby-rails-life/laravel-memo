@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Events\PostCreated;
 use Validator;
 use App\Jobs\ProcessPost;
+use App\Http\Requests\StorePost;
 
 class PostController extends Controller
 {
@@ -54,13 +55,14 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    //public function store(Request $request)
+    public function store(StorePost $request)
     {
-      $rules = [
-        'title' => 'required|kana',
-        'content'=>'required',
-        'category_id' => 'required',
-      ];
+      // $rules = [
+      //   'title' => 'required|kana',
+      //   'content'=>'required',
+      //   'category_id' => 'required',
+      // ];
 
       // $messages = array(
       //   'title.required' => 'タイトルを正しく入力してください。',
@@ -69,9 +71,9 @@ class PostController extends Controller
       // );
 
       //$validator = Validator::make($request->all(), $rules, $messages);
-      $validator = Validator::make($request->all(), $rules);
-
-      if ($validator->passes()) {
+      //$validator = Validator::make($request->all(), $rules);
+      //if ($validator->passes()) {
+      if ($request->validated()) {  
         $post = new Post;
         $post->title = $request->title;
         $post->content = $request->content;

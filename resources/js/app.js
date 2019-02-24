@@ -46,6 +46,8 @@ const app = new Vue({
             }).then((res)=>{
                 this.todos = res.data;
                 this.new_todo = '';
+            }).catch(error => {
+                alert(error.response)
             });
         },
         deleteTodo: function(task_id){

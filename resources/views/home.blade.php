@@ -22,6 +22,7 @@
                         <a href="/file" target="_blank" class="list-group-item list-group-item-action"><img src="/storage/xiaoqiankun.jpg" width="100" height="100"></a>
   　　　　　                <a href="/posts" target="_blank" class="list-group-item list-group-item-action active">記事-コメント(posts)</a>
                         <a href="/photos" target="_blank" class="list-group-item list-group-item-action">画像アップロード(photos)</a>
+                        <a href="/todo" target="_blank" class="list-group-item list-group-item-action">Todo</a>
                         <a href="/bmi/form" target="_blank" class="list-group-item list-group-item-action">サービス(bmi)</a>
                         <a href="/students" target="_blank" class="list-group-item list-group-item-action">Student-Courses(ManyToMany)</a>
                         @can('admin', App\User::class)
