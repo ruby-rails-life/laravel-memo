@@ -80,6 +80,7 @@
             @endif
 
             <div class="content">
+                <h2>{{$locale}} {{session('mySessionKey')}}</h2>
                 <table>
                     <tr>
                         <td>

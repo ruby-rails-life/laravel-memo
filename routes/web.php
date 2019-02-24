@@ -15,8 +15,10 @@ use App\Http\Resources\RelationNullable as RelNullResource;
 use App\Http\Resources\RelationNullableCollection as RelNullCollection;
 
 Route::get('/welcome', function () {
-    return view('welcome');
-});
+    $locale = App::getLocale();
+    session(['mySessionKey' => 'mySessionValue']);
+    return view('welcome', ['locale' => $locale]);
+})->middleware(['locale']);
 
 Route::get('/', 'ArticleController@index');
 
