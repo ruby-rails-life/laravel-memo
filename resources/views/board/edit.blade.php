@@ -14,7 +14,8 @@
 @endforeach
 <form method="POST" action="/posts/{{$post->id}}">
  @csrf
-  <input type="hidden" name="_method" value="PUT">
+ @method('PUT')
+
   <div class="form-group">
    <label for="title" class="">タイトル</label>
    <div class="">

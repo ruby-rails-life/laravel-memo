@@ -48,6 +48,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($this->isHttpException($exception)) {
+            return response()->view('errors.my-error');       
+        }
+        
         if ($exception instanceof MyException) {
             return response()->json(
                 $exception->getMessage(),

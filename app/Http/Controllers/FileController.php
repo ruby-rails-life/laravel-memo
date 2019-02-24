@@ -12,6 +12,7 @@ class FileController extends Controller
     {
         //report(new MyException('My Exception***')); ;
         //throw new MyException('My Exception***');
+        //abort(333);
 
         $fileName = 'xiaoqiankun.jpg';
     	// //return Storage::get($fileName);
