@@ -42,5 +42,6 @@
 - Event & Listener & Subscriber[posts/create]
 - Queue(ProcessPost job):[/posts/{$id}]  
 - File Storage[/file]
+- View: Share Composer[/home]
 
   

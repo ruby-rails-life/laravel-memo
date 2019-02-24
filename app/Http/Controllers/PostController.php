@@ -160,9 +160,10 @@ class PostController extends Controller
         return redirect('/posts')
           ->with('message', '投稿が完了しました。');
       }else{
-        return redirect('/posts/' .$post->id.'/edit')
-          ->withErrors($validator)
-          ->withInput();
+        // return redirect('/posts/' .$post->id.'/edit')
+        //   ->withErrors($validator)
+        //   ->withInput();
+        return back()->withErrors($validator)->withInput();
       }
     }
 

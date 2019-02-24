@@ -18,6 +18,10 @@ class FileController extends Controller
     	$data['url'] = $url;
     	return $data;
 
+        //return response()->file(public_path() . '/storage/'. $fileName);
+        //return response()->download(public_path() . '/storage/'. $fileName);
+
+
     	// if (Storage::exists($fileName))
     	// {
     	//     return Storage::download($fileName);

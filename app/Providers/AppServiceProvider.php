@@ -14,6 +14,7 @@ use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -76,6 +77,17 @@ class AppServiceProvider extends ServiceProvider
         //     while (DB::transactionLevel() > 0) {
         //         DB::rollBack();
         //     }
+        // });
+
+        //全ビューに対し、一部のデータを共有
+        View::share('myViewKey', 'myViewValue');
+
+        View::composer('home', 
+            'App\Http\View\Composers\MyComposer'
+        );
+
+        // View::composer('*', function ($view) {
+        //     $view->with('count', Clover::count());
         // });
     }
 
