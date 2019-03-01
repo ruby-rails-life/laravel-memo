@@ -16,7 +16,9 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    You are logged in! 
+                    routeName : {{$routeName}}
+                    actionName: {{$actionName}}
 
                     <div class="list-group mt-3" style="max-width: 300px;">
                         <a href="/file" target="_blank" class="list-group-item list-group-item-action"><img src="/storage/xiaoqiankun.jpg" width="100" height="100"></a>

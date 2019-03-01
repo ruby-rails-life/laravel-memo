@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Route;
 
 class HomeController extends Controller
 {
@@ -37,9 +38,14 @@ class HomeController extends Controller
 
         //$redis_name = Redis::get('redis-name');
 
+        $routeName = Route::currentRouteName(); 
+        $actionName = Route::currentRouteAction();
+
         return view('home',['userReq' => $userReq, 
             'decrypted' => $decrypted, 
             'bcrypt'=> $bcrypt,
+            'actionName' => $actionName,
+            'routeName' => $routeName,
             //'redis_name' => $redis_name
         ]);
     }
