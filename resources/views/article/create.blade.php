@@ -14,6 +14,7 @@
         <textarea class="form-control" id="bodyInput" rows="3" name="body"></textarea>
       </div>
       <button type="submit" class="btn btn-primary">新規追加</button>
+      <a href="/" class="btn btn-secondary">キャンセル</a>
     </form>
  
     @stop

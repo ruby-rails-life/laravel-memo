@@ -23,11 +23,9 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <nav class="nav">
-                  <a class="nav-link" href="#">My-Laravel</a>
-                  <a class="nav-link active" href="{{ url('/home') }}">メモ</a>
-                </nav>
-
+                <a class="navbar-brand" href="{{ url('/') }}">
+                   My-Laravel
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>

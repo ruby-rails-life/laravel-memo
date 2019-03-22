@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   </head>
   <body class="p-3">
-    <ul class="nav nav-pills">
-      <li class="nav-item"><a href="/" class="nav-link active">一覧</a></li>
-      <li class="nav-item"><a href="/create" class="nav-link">新規作成</a></li>
+    <ul class="nav justify-content-end">
+      <li class="nav-item"><a href="/login" class="nav-link">ログイン</a></li>
+      <li class="nav-item"><a href="/register" class="nav-link">新規登録</a></li>
     </ul>
 
     <div class="container-fluid">

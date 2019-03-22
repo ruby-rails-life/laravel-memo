@@ -14,6 +14,7 @@
         <textarea class="form-control" id="bodyInput" rows="3" name="body">{{ $article->body }}</textarea>
       </div>
       <button type="submit" class="btn btn-primary">修正</button>
+      <a href="/" class="btn btn-secondary">キャンセル</a>
     </form>
  
 @stop
