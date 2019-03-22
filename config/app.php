@@ -181,7 +181,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
 
         App\Providers\BmiCalServiceProvider::class,
-
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -233,7 +233,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
 
         'BmiCal' => App\Facades\BmiCal::class,
-
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];
