@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <nav class="nav">
-                  <a class="nav-link" href="#">My-Laravel</a>
+                  <a class="nav-link" href="{{ url('/project') }}">My-Laravel</a>
                   <a class="nav-link active" href="{{ url('/home') }}">メモ</a>
                 </nav>
 

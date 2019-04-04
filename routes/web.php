@@ -113,4 +113,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/category', 'CategoryController@index');
 
   Route::get('/file', 'FileController@index');  
+
+
+  Route::resource('/project', 'ProjectController');
 });
