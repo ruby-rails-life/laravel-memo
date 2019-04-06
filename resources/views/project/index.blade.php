@@ -21,6 +21,15 @@
           <label for="txtEstimatedDeliveryDateTo">納期To</label>
           <input type="date" class="form-control" id="txtEstimatedDeliveryDateTo" name="estimated_delivery_date_to" value="{{$estimated_delivery_date_to}}">
         </div>
+        <div class="form-group col-md-3">
+          <label for="cbxSearchRange">検索範囲</label>
+          <select class="custom-select" id="cbxSearchRange" name="search_range">
+            @foreach ($arrSearchRange as $key => $value)
+            <option value="{{$key}}" 
+            @if($key == $search_range)selected="selected"@endif>{{$value}}</option>
+            @endforeach
+          </select>
+        </div>
       </div>
       
       <div class="form-row mb-2">
@@ -49,26 +58,50 @@
             <th class="text-center">納期</th>
             <th class="text-center">営業担当者</th>
             <th class="text-center">開発担当者</th>
+            <th class="text-center">編集</th>
+            <th class="text-center">削除</th>
           </tr>
         </thead>
         <tbody>
           @foreach ($projects as $project)
           <tr>
-            <td><a href="/project/{{$project->id}}/edit">{{ $project->id }}</a></td>
-            <td><a href="/project/{{$project->id}}">{{ $project->project_name }}</a></td>
+            <td><a href="/project/{{$project->id}}">{{ $project->id }}</a></td>
+            <td>{{ $project->project_name }}</td>
             <td class="text-center">{{ $project->estimated_delivery_date }}</td>
             <td class="text-center">{{ $project->Sales->name }}</td>
             <td class="text-center">@if($project->developer_in_charge_id !=0){{ $project->Developer->name }}@endif</td>
+            <td class="text-center"><a href="/project/{{$project->id}}/edit"><i class="fas fa-edit fa-lg"></i></i></a></td>
+            <td class="text-center">
+              @if($project->trashed())
+              <a href="javascript:void(0);" onclick="res('{{$project->id}}');"> 
+                <i class="fas fa-trash-restore fa-lg"></i>
+              </a>
+              @else
+              <a href="javascript:void(0);" onclick="del('{{$project->id}}');">
+                <i class="fas fa-trash-alt fa-lg"></i>
+              </a>
+              @endif  
+            </td>
           </tr>
           @endforeach
         </tbody>
       </table>
+      <form id="delForm" action="/project" method="POST">
+       @csrf
+       @method('DELETE')
+      </form>
+      <form id="resForm" action="/project" method="POST">
+       @csrf
+      </form>
     </div>
 
     <div class="row">
       <div class="col-md-12">
         <div class="paginate">
-          {{ $projects->appends(Request::only('project_name','estimated_delivery_date_from','estimated_delivery_date_to'))->links() }}
+          {{ $projects->appends(Request::only('project_name',
+          'estimated_delivery_date_from',
+          'estimated_delivery_date_to',
+          'search_range'))->links() }}
         </div>
       </div>
     </div>
@@ -81,8 +114,26 @@
         $('#txtProjectName').val('');
         $('#txtEstimatedDeliveryDateFrom').val('');
         $('#txtEstimatedDeliveryDateTo').val('');
+        $('#cbxSearchRange').val('1');
         $('#searchForm').submit();
       });
     })
+
+    function del(id){
+      if(confirm("削除しますか？")) {
+        let del_url = "/project/" + id; 
+        $('#delForm').attr('action',del_url);
+        $('#delForm').submit();
+      }   
+    }
+
+    function res(id){
+      if(confirm("復元しますか？")) {
+        let res_url = "/project/" + id + "/restore"; 
+        $('#resForm').attr('action',res_url);
+        $('#resForm').submit();
+      }   
+    }
+
 </script>
 @stop

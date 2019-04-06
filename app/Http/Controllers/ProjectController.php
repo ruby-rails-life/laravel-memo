@@ -22,10 +22,24 @@ class ProjectController extends Controller
         $project_name = $request->input('project_name');
         $estimated_delivery_date_from = $request->input('estimated_delivery_date_from');
         $estimated_delivery_date_to = $request->input('estimated_delivery_date_to');
+        $search_range = $request->input('search_range');
         
         //クエリ生成
-        $query = Project::query();
- 
+        switch ($search_range){
+            case "1":
+                $query = Project::query();
+                break;
+            case "2":
+                $query = Project::onlyTrashed();
+                break;
+            case "3":
+                $query = Project::withTrashed();
+                break;
+            default:
+                $search_range = "1";
+                $query = Project::query();
+        }
+        
         //プロジェクト名称がある場合
         if(!empty($project_name))
         {
@@ -48,10 +62,14 @@ class ProjectController extends Controller
         $projects = $query->orderBy('created_at','desc')->paginate(2);
         Log::debug('$projects="'.$projects.'""');
 
+        $arrSearchRange = CommonFunctions::GetSearchRange();
+
         return view('project.index', ['projects' => $projects,
             'project_name'=>$project_name,
             'estimated_delivery_date_from' =>$estimated_delivery_date_from,
-            'estimated_delivery_date_to' =>$estimated_delivery_date_to   
+            'estimated_delivery_date_to' =>$estimated_delivery_date_to,
+            'search_range' => $search_range,
+            'arrSearchRange' => $arrSearchRange,   
         ]);
     }
 
@@ -109,9 +127,9 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        $project = Project::find($id);
-        $ArrProjectStatus = CommonFunctions::GetProjectStatus();
-        return view('project.show', ['project' => $project,'arrProjectStatus'=>$ArrProjectStatus]);
+        $project = Project::withTrashed()->find($id);
+        $arrProjectStatus = CommonFunctions::GetProjectStatus();
+        return view('project.show', ['project' => $project,'arrProjectStatus'=>$arrProjectStatus]);
     }
 
     /**
@@ -122,9 +140,9 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        $project = Project::find($id);
-        $ArrProjectStatus = CommonFunctions::GetProjectStatus();
-        return view('project.edit', ['project' => $project,'arrProjectStatus'=>$ArrProjectStatus]);
+        $project = Project::withTrashed()->find($id);
+        $arrProjectStatus = CommonFunctions::GetProjectStatus();
+        return view('project.edit', ['project' => $project,'arrProjectStatus'=>$arrProjectStatus]);
     }
 
     /**
@@ -168,6 +186,18 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Project::destroy($id);
+
+        return redirect('/project');
+    }
+
+    public function restore($id)
+    {
+       Project::onlyTrashed()
+        ->where('id', $id)
+        ->restore();
+
+       return redirect('/project');
+       //return redirect()->route('project.index', ['search_range' => '3']);
     }
 }

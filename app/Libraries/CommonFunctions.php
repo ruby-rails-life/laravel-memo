@@ -14,4 +14,14 @@ class CommonFunctions
         );
         return $config ; 
     } 
+
+    public static function GetSearchRange() 
+    { 
+        $config = array(
+            "1" => "有効のみ",
+            "2" => "削除のみ",
+            "3" => "全件",
+        );
+        return $config ; 
+    }
 }

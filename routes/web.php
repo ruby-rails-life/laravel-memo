@@ -116,4 +116,5 @@ Route::group(['middleware' => ['auth']], function () {
 
 
   Route::resource('/project', 'ProjectController');
+  Route::post('/project/{id}/restore', 'ProjectController@restore');
 });
