@@ -18,11 +18,32 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        //プロジェクト名称
+        $page = $request->input('page');
         $project_name = $request->input('project_name');
         $estimated_delivery_date_from = $request->input('estimated_delivery_date_from');
         $estimated_delivery_date_to = $request->input('estimated_delivery_date_to');
         $search_range = $request->input('search_range');
+        $search_flg = $request->input('search_flg');
+        
+        if (empty($page) || $page == 1) {
+            if (empty($search_flg) && $request->session()->exists('project.project_name')) {
+                $project_name = $request->session()->get('project.project_name');
+                $estimated_delivery_date_from = $request->session()->get('project.est_delivery_date_from');
+                $estimated_delivery_date_to = $request->session()->get('project.est_delivery_date_to');
+                $search_range = $request->session()->get('project.search_range');
+            } elseif ($search_flg == "1") {
+                $request->session()->put('project.project_name', $project_name);
+                $request->session()->put('project.est_delivery_date_from', $estimated_delivery_date_from);
+                $request->session()->put('project.est_delivery_date_to', $estimated_delivery_date_to);
+                $request->session()->put('project.search_range', $search_range);
+            }elseif ($search_flg == "2") {
+                $request->session()->forget('project.project_name');
+                $request->session()->forget('project.est_delivery_date_from');
+                $request->session()->forget('project.est_delivery_date_to');
+                $request->session()->forget('project.search_range');
+            }
+
+        }
         
         //クエリ生成
         switch ($search_range){
@@ -59,7 +80,7 @@ class ProjectController extends Controller
         Log::debug('$projects_sql="'.$projects_sql.'""');
 
         //ページネーション
-        $projects = $query->orderBy('created_at','desc')->paginate(2);
+        $projects = $query->orderBy('id','desc')->paginate(2);
         Log::debug('$projects="'.$projects.'""');
 
         $arrSearchRange = CommonFunctions::GetSearchRange();
@@ -199,5 +220,131 @@ class ProjectController extends Controller
 
        return redirect('/project');
        //return redirect()->route('project.index', ['search_range' => '3']);
+    }
+
+    public function csv_index()
+    {
+        return view('project.csv_index');
+    }
+
+    public function csv_import(Request $request)
+    {
+        setlocale(LC_ALL, 'ja_JP.UTF-8');
+
+        $validator = $this->validateUploadFile($request);
+
+        if ($validator->fails() === true){
+            return redirect('/project/csv_index')->with('message', $validator->errors()->first('file_upload'));
+        }
+        // アップロードしたファイルを取得
+        // 'file_upload' はCSVファイルインポート画面の inputタグのname属性
+        $uploaded_file = $request->file('file_upload');
+
+        // アップロードしたファイルの絶対パスを取得
+        $file_path = $request->file('file_upload')->path($uploaded_file);
+        $file = new \SplFileObject($file_path);
+        $file->setFlags(
+            \SplFileObject::READ_CSV |       // CSV 列として行を読み込む
+            \SplFileObject::READ_AHEAD |     // 先読み/巻き戻しで読み出す。
+            \SplFileObject::SKIP_EMPTY |     // 空行は読み飛ばす
+            \SplFileObject::DROP_NEW_LINE    // 行末の改行を読み飛ばす
+        );
+
+        $row_count = 0;
+        $column_name = [];
+        $column_value = [];
+        $array_csvdata = [];
+        foreach ($file as $row)
+        {
+            if ($row_count == 0){
+                $column_name = $this->getColumnName($row);
+            } else {
+                // 1行目のヘッダーは取り込まない
+                for($i=0; $i<count($row); $i++){
+                    $row[$i] = mb_convert_encoding($row[$i], 'UTF-8', 'SJIS'); 
+                    $column_value[$column_name[$i]] = $row[$i];   
+                }
+                
+                $validator = \Validator::make(
+                    $column_value,
+                    $this->defineValidationRules(),
+                    $this->defineValidationMessages()
+                );
+
+                if ($validator->passes()) {
+                    array_push($array_csvdata, $column_value);
+                } else {
+                    return back()->withErrors($validator)->with('message', sprintf('%d行目データにエラーが発生しました。',$row_count));
+                }
+            }
+            $row_count++;
+        }
+
+        //追加した配列の数を数える
+        $array_count = count($array_csvdata);
+ 
+        //もし配列の数が500未満なら
+        if ($array_count < 500){
+            //バルクインサート
+            Project::insert($array_csvdata);
+        } else {
+            //追加した配列が500以上なら、array_chunkで500ずつ分割する
+            $array_partial = array_chunk($array_csvdata, 500); //配列分割
+   
+            //分割した数を数えて
+            $array_partial_count = count($array_partial); //配列の数
+ 
+            //分割した数の分だけインポートを繰り替えす
+            for ($i = 0; $i <= $array_partial_count - 1; $i++){
+                Project::insert($array_partial[$i]);
+            }
+        }
+
+        return redirect('/project/csv_index')->with('message', '正常にインポートしました。');
+    }
+
+    private function validateUploadFile(Request $request)
+    {
+        return \Validator::make($request->all(), [
+                'file_upload' => 'required|file|mimetypes:text/plain|mimes:csv,txt',
+            ], [
+                'file_upload.required'  => 'ファイルを選択してください。',
+                'file_upload.file'      => 'ファイルアップロードに失敗しました。',
+                'file_upload.mimetypes' => 'ファイル形式が不正です。',
+                'file_upload.mimes'     => 'ファイル拡張子が異なります。',
+            ]
+        );
+    }
+
+    private function getColumnName() {
+        $column_name = [
+            'project_name',
+            'order_date', 
+            'estimated_delivery_date',
+            'project_status',
+            'development_progress',
+        ];
+        return $column_name;
+    }
+
+    private function defineValidationRules()
+    {
+        return [
+            // CSVデータ用バリデーションルール
+            'project_name' => 'required', 
+        ];
+    }
+
+    /**
+     * バリデーションメッセージの定義
+     *
+     * @return array
+     */
+    private function defineValidationMessages()
+    {
+        return [
+            // CSVデータ用バリデーションエラーメッセージ
+            'project_name.required' => 'プロジェクト名称を入力してください。',
+        ];
     }
 }

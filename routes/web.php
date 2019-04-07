@@ -115,6 +115,9 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/file', 'FileController@index');  
 
 
-  Route::resource('/project', 'ProjectController');
   Route::post('/project/{id}/restore', 'ProjectController@restore');
+  Route::get('/project/csv_index', 'ProjectController@csv_index');
+  Route::post('/project/csv_import', 'ProjectController@csv_import');
+  Route::resource('/project', 'ProjectController');
+
 });

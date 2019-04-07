@@ -39,7 +39,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdownLeft">
               <a class="dropdown-item" href="/project">プロジェクト検索</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">保留</a>
+              <a class="dropdown-item" href="/project/csv_index">CSVインポート</a>
             </div>
           </li>
         </ul>
@@ -73,10 +73,8 @@
       </div>
     </main>
   </div>
-　　　<script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
     @yield('script')
 </body>

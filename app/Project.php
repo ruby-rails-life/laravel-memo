@@ -16,4 +16,12 @@ class Project extends Model
     public function Developer(){
         return $this->belongsTo('App\User','developer_in_charge_id','id');
     }
+
+    protected $fillable = [
+        'project_name',
+        'order_date', 
+        'estimated_delivery_date',
+        'project_status',
+        'development_progress',
+    ];
 }

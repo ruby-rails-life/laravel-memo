@@ -8,6 +8,7 @@
 @endif
 
     <form id="searchForm" action="{{url('/project')}}">
+      <input type="hidden" id="searchFlg" name="search_flg">
       <div class="form-row">
         <div class="form-group col-md-3">
           <label for="txtProjectName">プロジェクト名称</label>
@@ -34,7 +35,7 @@
       
       <div class="form-row mb-2">
         <div class="col-md-12 text-right">
-          <button type="submit" class="btn btn-outline-primary">検索</button>
+          <button id="btnSearch" type="button" class="btn btn-outline-primary">検索</button>
           <button id="btnClear" type="button" class="btn btn-outline-secondary">クリア</button>
           @if (Auth::user()->role == 3)
           <a href="{{url('/project/create')}}" class="btn btn-outline-success">新規</a>
@@ -68,7 +69,7 @@
             <td><a href="/project/{{$project->id}}">{{ $project->id }}</a></td>
             <td>{{ $project->project_name }}</td>
             <td class="text-center">{{ $project->estimated_delivery_date }}</td>
-            <td class="text-center">{{ $project->Sales->name }}</td>
+            <td class="text-center">@if($project->sales_staff_id !=0){{ $project->Sales->name }}@endif</td>
             <td class="text-center">@if($project->developer_in_charge_id !=0){{ $project->Developer->name }}@endif</td>
             <td class="text-center"><a href="/project/{{$project->id}}/edit"><i class="fas fa-edit fa-lg"></i></i></a></td>
             <td class="text-center">
@@ -115,6 +116,12 @@
         $('#txtEstimatedDeliveryDateFrom').val('');
         $('#txtEstimatedDeliveryDateTo').val('');
         $('#cbxSearchRange').val('1');
+        $('#searchFlg').val('2');
+        $('#searchForm').submit();
+      });
+
+      $('#btnSearch').click(function(e) {
+        $('#searchFlg').val('1');
         $('#searchForm').submit();
       });
     })
