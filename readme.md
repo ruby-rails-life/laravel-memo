@@ -2,7 +2,7 @@
 
 ## My Project
 - Project Resource
-- Csv Import
+- Csv Import(Insert, Update, Delete, Validation)
 
 ## Memo
 - Article CRUD[/]
