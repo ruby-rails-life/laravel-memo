@@ -30,12 +30,16 @@
         <td>@if($project->project_status <>''){{$arrProjectStatus[$project->project_status]}}@endif</td>
       </tr>
       <tr>
+        <td class="field-bg-color">進捗</td>
+        <td>{{ $project->development_progress}}</td>
+      </tr>
+      <tr>
         <td class="field-bg-color">納期</td>
         <td>{{$project->estimated_delivery_date}}</td>
       </tr>
       <tr>
         <td class="field-bg-color">営業担当者</td>
-        <td>{{$project->Sales->name }}</td>
+        <td>@if($project->sales_staff_id !=0){{$project->Sales->name }}@endif</td>
       </tr>
       <tr>
         <td class="field-bg-color">開発担当者</td>

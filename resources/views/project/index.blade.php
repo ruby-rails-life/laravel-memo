@@ -56,6 +56,8 @@
           <tr>
             <th>ID</th>
             <th>プロジェクト名称</th>
+            <th class="text-center">ステータス</th>
+            <th class="text-center">進捗</th>
             <th class="text-center">納期</th>
             <th class="text-center">営業担当者</th>
             <th class="text-center">開発担当者</th>
@@ -68,6 +70,8 @@
           <tr>
             <td><a href="/project/{{$project->id}}">{{ $project->id }}</a></td>
             <td>{{ $project->project_name }}</td>
+            <td class="text-center">@if (!empty($project->project_status)) {{ $arrProjectStatus[$project->project_status] }}@endif</td>
+            <td class="text-center">{{ $project->development_progress }}</td>
             <td class="text-center">{{ $project->estimated_delivery_date }}</td>
             <td class="text-center">@if($project->sales_staff_id !=0){{ $project->Sales->name }}@endif</td>
             <td class="text-center">@if($project->developer_in_charge_id !=0){{ $project->Developer->name }}@endif</td>

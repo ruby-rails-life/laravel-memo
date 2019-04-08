@@ -37,6 +37,13 @@
       </div>
 
       <div class="form-group row">
+        <label for="txtDevelopmentProgress" class="col-md-2 col-form-label">納期</label>
+        <div class="col-md-10">
+          <input type="text" class="form-control" id="txtDevelopmentProgress" name="development_progress" value="{{ $project->development_progress }}">
+        </div>
+      </div>
+
+      <div class="form-group row">
         <label for="txtEstimatedDeliveryDate" class="col-md-2 col-form-label">納期</label>
         <div class="col-md-10">
           <input type="date" class="form-control" id="txtEstimatedDeliveryDate" name="estimated_delivery_date" value="{{ $project->estimated_delivery_date }}">

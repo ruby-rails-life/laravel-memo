@@ -84,13 +84,15 @@ class ProjectController extends Controller
         Log::debug('$projects="'.$projects.'""');
 
         $arrSearchRange = CommonFunctions::GetSearchRange();
+        $arrProjectStatus = CommonFunctions::GetProjectStatus();
 
         return view('project.index', ['projects' => $projects,
             'project_name'=>$project_name,
             'estimated_delivery_date_from' =>$estimated_delivery_date_from,
             'estimated_delivery_date_to' =>$estimated_delivery_date_to,
             'search_range' => $search_range,
-            'arrSearchRange' => $arrSearchRange,   
+            'arrSearchRange' => $arrSearchRange,
+            'arrProjectStatus' => $arrProjectStatus,               
         ]);
     }
 
@@ -101,8 +103,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $ArrProjectStatus = CommonFunctions::GetProjectStatus();
-        return view('project.create',['arrProjectStatus'=>$ArrProjectStatus]);
+        $arrProjectStatus = CommonFunctions::GetProjectStatus();
+        return view('project.create',['arrProjectStatus'=>$arrProjectStatus]);
     }
 
     /**
@@ -191,6 +193,7 @@ class ProjectController extends Controller
             $project->order_date = $request->order_date;
             $project->project_status = $request->project_status;
             $project->estimated_delivery_date = $request->estimated_delivery_date;
+            $project->development_progress = $request->development_progress;
             $project->save();
 
             return redirect('/project')->with('message', '編集が完了しました。');
@@ -254,15 +257,24 @@ class ProjectController extends Controller
         $column_name = [];
         $column_value = [];
         $array_csvdata = [];
+
         foreach ($file as $row)
         {
             if ($row_count == 0){
                 $column_name = $this->getColumnName($row);
             } else {
+                $data_div = 'ins';
                 // 1行目のヘッダーは取り込まない
                 for($i=0; $i<count($row); $i++){
                     $row[$i] = mb_convert_encoding($row[$i], 'UTF-8', 'SJIS'); 
-                    $column_value[$column_name[$i]] = $row[$i];   
+                    if ($i == 0 && $row[$i] == '1') {
+                        $data_div = 'del';
+                    } else if($i==1 && !empty($row[$i])) {
+                        if (empty($row[0])) $data_div = 'upd';
+                        $column_value['id'] = $row[$i];
+                    } else if ($i >= 2) {
+                        $column_value[$column_name[$i]] = $row[$i];
+                    } 
                 }
                 
                 $validator = \Validator::make(
@@ -272,7 +284,8 @@ class ProjectController extends Controller
                 );
 
                 if ($validator->passes()) {
-                    array_push($array_csvdata, $column_value);
+                    //array_push($array_csvdata[$data_div], $column_value);
+                    $array_csvdata[$data_div][] = $column_value;
                 } else {
                     return back()->withErrors($validator)->with('message', sprintf('%d行目データにエラーが発生しました。',$row_count));
                 }
@@ -280,23 +293,25 @@ class ProjectController extends Controller
             $row_count++;
         }
 
+        $file = null;
+        unlink($file_path);
+
         //追加した配列の数を数える
-        $array_count = count($array_csvdata);
- 
-        //もし配列の数が500未満なら
-        if ($array_count < 500){
-            //バルクインサート
-            Project::insert($array_csvdata);
-        } else {
-            //追加した配列が500以上なら、array_chunkで500ずつ分割する
-            $array_partial = array_chunk($array_csvdata, 500); //配列分割
-   
-            //分割した数を数えて
-            $array_partial_count = count($array_partial); //配列の数
- 
-            //分割した数の分だけインポートを繰り替えす
-            for ($i = 0; $i <= $array_partial_count - 1; $i++){
-                Project::insert($array_partial[$i]);
+        if (isset($array_csvdata['ins'])) {
+            $this->insertCsvData($array_csvdata['ins']);
+        }
+
+        //更新
+        if (isset($array_csvdata['upd'])) {
+            foreach ($array_csvdata['upd'] as $update_data) {
+                $this->updateCsvData($update_data['id'], $update_data);
+            }
+        }
+
+        //削除
+        if (isset($array_csvdata['del'])) {
+            foreach ($array_csvdata['del'] as $delete_data) {
+                $this->deleteCsvData($delete_data['id']);
             }
         }
 
@@ -318,6 +333,8 @@ class ProjectController extends Controller
 
     private function getColumnName() {
         $column_name = [
+            'delete_flg',
+            'id',
             'project_name',
             'order_date', 
             'estimated_delivery_date',
@@ -346,5 +363,39 @@ class ProjectController extends Controller
             // CSVデータ用バリデーションエラーメッセージ
             'project_name.required' => 'プロジェクト名称を入力してください。',
         ];
+    }
+
+    private function insertCsvData($csvData) {
+        $array_count = count($csvData);
+        //もし配列の数が500未満なら
+        if ($array_count < 500){
+                //バルクインサート
+            Project::insert($csvData);
+        } else {
+            //追加した配列が500以上なら、array_chunkで500ずつ分割する
+            $array_partial = array_chunk($csvData, 500); //配列分割
+   
+            //分割した数を数えて
+            $array_partial_count = count($array_partial); //配列の数
+ 
+            //分割した数の分だけインポートを繰り替えす
+            for ($i = 0; $i <= $array_partial_count - 1; $i++){
+                Project::insert($array_partial[$i]);
+            }
+        }
+    }
+
+    private function updateCsvData($id, $csvData) {
+        $project = Project::find($id);
+        $project->project_name = $csvData['project_name'];
+        $project->order_date = $csvData['order_date'];
+        $project->project_status = $csvData['project_status'];
+        $project->estimated_delivery_date = $csvData['estimated_delivery_date'];
+        $project->development_progress = $csvData['development_progress'];
+        $project->save();
+    }
+
+    private function deleteCsvData($id) {
+        Project::destroy($id);
     }
 }
