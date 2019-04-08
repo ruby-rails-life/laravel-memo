@@ -253,49 +253,19 @@ class ProjectController extends Controller
             \SplFileObject::DROP_NEW_LINE    // 行末の改行を読み飛ばす
         );
 
-        $row_count = 0;
-        $column_name = [];
-        $column_value = [];
-        $array_csvdata = [];
-
-        foreach ($file as $row)
-        {
-            if ($row_count == 0){
-                $column_name = $this->getColumnName($row);
-            } else {
-                $data_div = 'ins';
-                // 1行目のヘッダーは取り込まない
-                for($i=0; $i<count($row); $i++){
-                    $row[$i] = mb_convert_encoding($row[$i], 'UTF-8', 'SJIS'); 
-                    if ($i == 0 && $row[$i] == '1') {
-                        $data_div = 'del';
-                    } else if($i==1 && !empty($row[$i])) {
-                        if (empty($row[0])) $data_div = 'upd';
-                        $column_value['id'] = $row[$i];
-                    } else if ($i >= 2) {
-                        $column_value[$column_name[$i]] = $row[$i];
-                    } 
-                }
-                
-                $validator = \Validator::make(
-                    $column_value,
-                    $this->defineValidationRules(),
-                    $this->defineValidationMessages()
-                );
-
-                if ($validator->passes()) {
-                    //array_push($array_csvdata[$data_div], $column_value);
-                    $array_csvdata[$data_div][] = $column_value;
-                } else {
-                    return back()->withErrors($validator)->with('message', sprintf('%d行目データにエラーが発生しました。',$row_count));
-                }
-            }
-            $row_count++;
+        // CSVの中身に対するバリデーションを実施
+        $csv_errors = $this->validateCsvData($file);
+        if (count($csv_errors) >= 1) {
+            $file = null;
+            unlink($file_path);
+            return redirect()->route('project.csv_index')->with('errors',$csv_errors);
         }
+
+        $array_csvdata = $this->makeCsvData($file);
 
         $file = null;
         unlink($file_path);
-
+       
         //追加した配列の数を数える
         if (isset($array_csvdata['ins'])) {
             $this->insertCsvData($array_csvdata['ins']);
@@ -318,6 +288,105 @@ class ProjectController extends Controller
         return redirect('/project/csv_index')->with('message', '正常にインポートしました。');
     }
 
+    private function validateCsvData($file) {
+        // バリデーションルール生成
+        $csv_errors = [];
+        $csv_id_list = [];
+        $arrProjectStatus = CommonFunctions::GetProjectStatus();
+        $column_name = $this->getColumnName();
+        $error_msg = "";
+                
+        foreach ($file as $line_num => $line) {
+            if (0 === $line_num || 1 === count($line)) {
+                // 最初の行または空行など余分な空白がCSVの途中に混ざっている場合は無視
+                continue;
+            }
+            if (count($line) !== 7) {
+                $error_msg = sprintf("Line %d : カラム数が不正です", $line_num);
+                $csv_errors = array_merge($csv_errors, [$error_msg]);
+            }
+
+            for($i=0; $i<count($line); $i++){
+                $line[$i] = mb_convert_encoding($line[$i], 'UTF-8', 'SJIS'); 
+                $column_value[$column_name[$i]] = $line[$i];
+            }    
+
+            if (empty($column_value['delete_flg'])) {
+                $validator = \Validator::make(
+                    $column_value,
+                    $this->defineValidationRules(),
+                    $this->defineValidationMessages()
+                );
+
+                if ($validator->fails()) {
+                    $cur_error = [];
+                    foreach ($validator->errors()->all() as $error) {
+                        $error_msg = sprintf("Line %d : %s", $line_num, $error);
+                        $cur_error[] = $error_msg;
+                    }
+                    $csv_errors = array_merge($csv_errors, $cur_error);
+                    continue;
+                }
+
+                if (!empty($column_value['project_status']) && !isset($arrProjectStatus[$column_value['project_status']])) {
+                    $error_msg = sprintf("Line %d : ステータス[%s]は無効です", $line_num, $column_value['project_status']);
+                    $csv_errors = array_merge($csv_errors, [$error_msg]);
+                }                
+            }
+
+            // Update, Delete
+            if ($column_value['id']) {
+                if (!Project::where('id', '=', $column_value['id'])->exists()) {
+                    $error_msg = sprintf("Line %d : [ID=%s]のプロジェクトが存在しません", $line_num,$column_value['id']);
+                    $csv_errors = array_merge($csv_errors, [$error_msg]);
+                }
+                       
+                // CSV内でIDが重複していないかチェック
+                if (!isset($csv_id_list[$column_value['id']])) {
+                    $csv_id_list[$column_value['id']] = $column_value['id'];
+                } else {
+                    $error_msg = sprintf("Line %d : [ID=%s]がCSV内で重複しています", $line_num,$column_value['id']);
+                    $csv_errors = array_merge($csv_errors, [$error_msg]);
+                }
+            }
+        }
+
+        return $csv_errors;
+    }
+
+    private function makeCsvData($file) {
+        $row_count = 0;
+        $column_name = [];
+        $column_value = [];
+        $array_csvdata = [];
+
+        foreach ($file as $row)
+        {
+            if ($row_count == 0){
+                $column_name = $this->getColumnName();
+            } else {
+                $data_div = 'ins';
+                // 1行目のヘッダーは取り込まない
+                for($i=0; $i<count($row); $i++){
+                    $row[$i] = mb_convert_encoding($row[$i], 'UTF-8', 'SJIS'); 
+                    if ($i == 0 && $row[$i] == '1') {
+                        $data_div = 'del';
+                    } else if($i==1) {
+                        $column_value['id'] = $row[$i];
+                        if (empty($row[0]) && !empty($row[$i])) $data_div = 'upd';
+                    } else if ($i >= 2) {
+                        $column_value[$column_name[$i]] = $row[$i];
+                    } 
+                }
+                //array_push($array_csvdata[$data_div], $column_value);
+                $array_csvdata[$data_div][] = $column_value;
+            }
+            $row_count++;
+        }
+
+        return $array_csvdata;
+    }
+    
     private function validateUploadFile(Request $request)
     {
         return \Validator::make($request->all(), [
@@ -341,6 +410,7 @@ class ProjectController extends Controller
             'project_status',
             'development_progress',
         ];
+
         return $column_name;
     }
 

@@ -6,7 +6,7 @@
   <p>{{ session('message') }}</p>
 </div>
 @endif
-@foreach($errors->all() as $message)
+@foreach($errors as $message)
   <p class="bg-danger">{{ $message }}</p>
 @endforeach
 
