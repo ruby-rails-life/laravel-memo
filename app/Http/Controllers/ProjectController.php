@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use App\Exports\ProjectExport;
+use App\Imports\ProjectImport;
 
 class ProjectController extends Controller
 {
@@ -294,6 +295,10 @@ class ProjectController extends Controller
         );
     }
 
+    public function excel_index()
+    {
+        return view('project.excel_index');
+    }
      /**
      * 帳票のエクスポート
      */
@@ -302,6 +307,36 @@ class ProjectController extends Controller
         $projects = Project::all();
         $view = \view('project.excel_download', ['projects'=>$projects]);
         return \Excel::download(new ProjectExport($view), 'projects.xlsx');
+    }
+
+    public function excel_import(Request $request)
+    {
+        setlocale(LC_ALL, 'ja_JP.UTF-8');
+
+        $validator = \Validator::make($request->all(), [
+                'file_upload' => 'required|file|mimetypes:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|mimes:xlsx',
+            ], [
+                'file_upload.required'  => 'ファイルを選択してください。',
+                'file_upload.file'      => 'ファイルアップロードに失敗しました。',
+                'file_upload.mimetypes' => 'ファイル形式が不正です。',
+                'file_upload.mimes'     => 'ファイル拡張子が異なります。',
+            ]
+        );
+;
+
+        if ($validator->fails() === true){
+            return redirect('/project/excel_index')->with('message', $validator->errors()->first('file_upload'));
+        }
+        // アップロードしたファイルを取得
+        // 'file_upload' はCSVファイルインポート画面の inputタグのname属性
+        $uploaded_file = $request->file('file_upload');
+
+        // アップロードしたファイルの絶対パスを取得
+        $file_path = $request->file('file_upload')->path($uploaded_file);
+
+        \Excel::import(new ProjectImport, $file_path);
+
+        return redirect('/project/excel_index')->with('message', '正常にインポートしました。');
     }
 
     public function csv_index()

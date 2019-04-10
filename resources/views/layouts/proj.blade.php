@@ -40,6 +40,8 @@
               <a class="dropdown-item" href="/project">プロジェクト検索</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/project/csv_index">CSVインポート</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/project/excel_index">EXCELインポート</a>
             </div>
           </li>
         </ul>
