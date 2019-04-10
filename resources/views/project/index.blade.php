@@ -41,7 +41,7 @@
           <a href="/project/excel_download" class="btn btn-outline-success">Excel(D)</a>
           <a href="/project/pdf_download" class="btn btn-outline-success">PDF(D)</a>
           @if (Auth::user()->role == 3)
-          <a href="{{url('/project/create')}}" class="btn btn-outline-success">新規</a>
+          <a href="{{url('/project/create')}}" class="btn btn-outline-info">新規</a>
           @endif
         </div>
       </div>
@@ -58,6 +58,7 @@
         <thead>
           <tr>
             <th>ID</th>
+            <th>画像</th>
             <th>プロジェクト名称</th>
             <th class="text-center">ステータス</th>
             <th class="text-center">進捗</th>
@@ -72,6 +73,7 @@
           @foreach ($projects as $project)
           <tr>
             <td><a href="/project/{{$project->id}}">{{ $project->id }}</a></td>
+            <td>@if ($project->project_image)<img src="/{{$project->project_image}}">@endif</td>
             <td>{{ $project->project_name }}</td>
             <td class="text-center">@if (!empty($project->project_status)) {{ $arrProjectStatus[$project->project_status] }}@endif</td>
             <td class="text-center">{{ $project->development_progress }}</td>

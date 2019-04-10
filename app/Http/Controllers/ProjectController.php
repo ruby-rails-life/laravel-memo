@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use App\Exports\ProjectExport;
 use App\Imports\ProjectImport;
+use Intervention\Image\Facades\Image;
 
 class ProjectController extends Controller
 {
@@ -145,13 +146,51 @@ class ProjectController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->passes()) {
-            
+
+            $project_image = "";
+            $input = $request->all();
+
+            if (isset($input['file_upload'])) {
+                $fileName = $input['file_upload']->getClientOriginalName();
+                $fileName = time()."@".$fileName;
+                $image = Image::make($input['file_upload']->getRealPath());
+ 
+                //画像リサイズ ※追加
+                // $image->resize(100, null, function ($constraint) {
+                //     $constraint->aspectRatio();
+                // });
+                //$image->resize(100,100);
+                //$image->fit(50);
+                //$image->crop(100, 100);
+                //$image->trim('top-left', 'left');
+                //$image->resize(100,100)->greyscale();
+                //$image->resize(100,100)->invert();
+                //$image->resize(100,100)->flip('v');
+                //$image->resize(100,100)->pixelate(12);
+                
+                $project_image = 'images/' . $fileName;
+
+                if ($image->width() < 100) {
+                    $background_img = \Image::canvas(100, 100);
+                    $background_img->fill('#ffffff');
+                    $background_img->insert($image, 'center'); 
+                    $background_img->save(public_path() . '/' . $project_image);
+                }else {
+                    $image->fit(100, 100, function ($constraint) {
+                        $constraint->upsize();
+                    });
+                    $image->save(public_path() . '/' . $project_image);
+                }
+            }
+                        
             $project = new Project;
-            $project->project_name = $request->project_name;
-            $project->order_date = $request->order_date;
-            $project->project_status = $request->project_status;
-            $project->estimated_delivery_date = $request->estimated_delivery_date;
+            $project->project_name = $input['project_name'];
+            $project->order_date = $input['order_date'];
+            $project->project_status = $input['project_status'];
+            $project->estimated_delivery_date = $input['estimated_delivery_date'];
             $project->sales_staff_id = Auth::user()->id;
+            if (!empty($project_image))  $project->project_image = $project_image;
+            
             $project->save();
  
             return redirect('/project')->with('message', '新規登録が完了しました。');

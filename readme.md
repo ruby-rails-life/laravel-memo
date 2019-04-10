@@ -6,6 +6,7 @@
 - Csv Download(chunk)
 - Excel Batch Import|Import|Download(Laravel-excel)
 - Pdf Download(Laravel-dompdf) 
+- Intervention Image
 
 ## Memo
 - Article CRUD[/]
