@@ -184,6 +184,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -238,6 +240,8 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

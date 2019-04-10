@@ -4,7 +4,8 @@
 - Project Resource
 - Csv Import(Insert, Update, Delete, Validation)
 - Csv Download(chunk)
-- Excel Download(Laravel-excel)
+- Excel Batch Import|Import|Download(Laravel-excel)
+- Pdf Download(Laravel-dompdf) 
 
 ## Memo
 - Article CRUD[/]

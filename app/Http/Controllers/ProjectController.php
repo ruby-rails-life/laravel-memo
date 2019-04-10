@@ -244,6 +244,9 @@ class ProjectController extends Controller
        //return redirect()->route('project.index', ['search_range' => '3']);
     }
 
+    /**
+     * CSVダウンロード
+     */
     public function csv_download(Request $request)
     {
         $project_name = $request->session()->get('project.project_name');
@@ -295,12 +298,8 @@ class ProjectController extends Controller
         );
     }
 
-    public function excel_index()
-    {
-        return view('project.excel_index');
-    }
-     /**
-     * 帳票のエクスポート
+    /**
+     * Excelダウンロード
      */
     public function excel_download()
     {
@@ -309,6 +308,30 @@ class ProjectController extends Controller
         return \Excel::download(new ProjectExport($view), 'projects.xlsx');
     }
 
+    /**
+     * PDFダウンロード
+     */
+    public function pdf_download()
+    {
+        $projects = Project::all();
+        // //$pdf = app('dompdf.wrapper');
+        // //$pdf->loadView('project.pdf_download', ['projects' => $projects]);
+        $pdf = \PDF::loadView('project.pdf_download', ['projects' => $projects]);
+        
+        return $pdf->stream('sample.pdf');
+        // PDFをダウンロードさせたい場合は下記を return します。
+        //return $pdf->download('projects.pdf'); 
+    }
+
+
+    /**
+     * Excelインポート
+     */
+    public function excel_index()
+    {
+        return view('project.excel_index');
+    }
+    
     public function excel_import(Request $request)
     {
         setlocale(LC_ALL, 'ja_JP.UTF-8');
@@ -339,6 +362,9 @@ class ProjectController extends Controller
         return redirect('/project/excel_index')->with('message', '正常にインポートしました。');
     }
 
+    /**
+     * CSVインポート
+     */
     public function csv_index()
     {
         return view('project.csv_index');

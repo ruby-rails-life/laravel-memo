@@ -1,5 +1,5 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style type="text/css">
@@ -40,6 +40,5 @@
   @endforeach
   </tbody>
 </table>
-
 </body>
 </html>

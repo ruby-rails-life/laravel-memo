@@ -120,6 +120,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::post('/project/csv_import', 'ProjectController@csv_import');
   Route::get('/project/csv_download', 'ProjectController@csv_download')->name('project.csv_download');
   Route::get('/project/excel_download', 'ProjectController@excel_download')->name('project.excel_download');
+  Route::get('/project/pdf_download', 'ProjectController@pdf_download')->name('project.pdf_download');
   Route::get('/project/excel_index', 'ProjectController@excel_index')->name('project.excel_index');
   Route::post('/project/excel_import', 'ProjectController@excel_import');
   Route::resource('/project', 'ProjectController');
