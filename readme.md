@@ -3,6 +3,8 @@
 ## My Project
 - Project Resource
 - Csv Import(Insert, Update, Delete, Validation)
+- Csv Download(chunk)
+- Excel Download(Laravel-excel)
 
 ## Memo
 - Article CRUD[/]

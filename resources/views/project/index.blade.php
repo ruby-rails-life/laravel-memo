@@ -37,6 +37,8 @@
         <div class="col-md-12 text-right">
           <button id="btnSearch" type="button" class="btn btn-outline-primary">検索</button>
           <button id="btnClear" type="button" class="btn btn-outline-secondary">クリア</button>
+          <a href="/project/csv_download" class="btn btn-outline-success">CSV(D)</a>
+          <a href="/project/excel_download" class="btn btn-outline-success">Excel(D)</a>
           @if (Auth::user()->role == 3)
           <a href="{{url('/project/create')}}" class="btn btn-outline-success">新規</a>
           @endif
@@ -128,6 +130,7 @@
         $('#searchFlg').val('1');
         $('#searchForm').submit();
       });
+
     })
 
     function del(id){

@@ -118,6 +118,8 @@ Route::group(['middleware' => ['auth']], function () {
   Route::post('/project/{id}/restore', 'ProjectController@restore');
   Route::get('/project/csv_index', 'ProjectController@csv_index')->name('project.csv_index');
   Route::post('/project/csv_import', 'ProjectController@csv_import');
+  Route::get('/project/csv_download', 'ProjectController@csv_download')->name('project.csv_download');
+  Route::get('/project/excel_download', 'ProjectController@excel_download')->name('project.excel_download');
   Route::resource('/project', 'ProjectController');
 
 });

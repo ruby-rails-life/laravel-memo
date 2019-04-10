@@ -182,6 +182,8 @@ return [
 
         App\Providers\BmiCalServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -234,6 +236,8 @@ return [
 
         'BmiCal' => App\Facades\BmiCal::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];
