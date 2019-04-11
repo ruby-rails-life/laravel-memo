@@ -88,16 +88,16 @@ class ProjectController extends Controller
         //クエリ生成
         switch ($search_range){
             case "1":
-                $query = Project::query();
+                $query = Project::with(['Sales', 'Developer']);
                 break;
             case "2":
-                $query = Project::onlyTrashed();
+                $query = Project::onlyTrashed()->with(['Sales', 'Developer']);
                 break;
             case "3":
-                $query = Project::withTrashed();
+                $query = Project::withTrashed()->with(['Sales', 'Developer']);
                 break;
             default:
-                $query = Project::query();
+                $query = Project::with(['Sales', 'Developer']);
         }
         
         //プロジェクト名称がある場合
