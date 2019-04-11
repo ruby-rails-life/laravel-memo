@@ -37,9 +37,9 @@
         <div class="col-md-12 text-right">
           <button id="btnSearch" type="button" class="btn btn-outline-primary">検索</button>
           <button id="btnClear" type="button" class="btn btn-outline-secondary">クリア</button>
-          <a href="/project/csv_download" class="btn btn-outline-success">CSV(D)</a>
-          <a href="/project/excel_download" class="btn btn-outline-success">Excel(D)</a>
-          <a href="/project/pdf_download" class="btn btn-outline-success">PDF(D)</a>
+          <a id="csvDownload" href="javascript:void(0);" class="btn btn-outline-success">CSV(D)</a>
+          <a id="excelDownload" href="javascript:void(0);" class="btn btn-outline-success">Excel(D)</a>
+          <a id="pdfDownload" href="javascript:void(0);" class="btn btn-outline-success">PDF(D)</a>
           @if (Auth::user()->role == 3)
           <a href="{{url('/project/create')}}" class="btn btn-outline-info">新規</a>
           @endif
@@ -134,7 +134,34 @@
         $('#searchForm').submit();
       });
 
+      $('#csvDownload').click(function(e) {
+          let conds = getConds();
+          let url = '/project/csv_download?' + conds;
+          $(this).attr('href',url);
+      });
+
+      $('#excelDownload').click(function(e) {
+          let conds = getConds();
+          let url = '/project/excel_download?' + conds;
+          $(this).attr('href',url);
+      });
+
+      $('#pdfDownload').click(function(e) {
+          let conds = getConds();
+          let url = '/project/pdf_download?' + conds;
+          $(this).attr('href',url);
+      });
+
     })
+
+    function getConds() {
+      let conds = 'project_name=' +  $('#txtProjectName').val();
+      conds += '&estimated_delivery_date_from=' +  $('#txtEstimatedDeliveryDateFrom').val();
+      conds += '&estimated_delivery_date_to=' +  $('#txtEstimatedDeliveryDateTo').val();
+      conds += '&search_range=' + $('#cbxSearchRange').val();
+    
+      return conds; 
+    }
 
     function del(id){
       if(confirm("削除しますか？")) {

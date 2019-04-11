@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use App\Exports\ProjectExport;
 use App\Imports\ProjectImport;
 use Intervention\Image\Facades\Image;
+use Response;
 
 class ProjectController extends Controller
 {
@@ -114,6 +115,31 @@ class ProjectController extends Controller
         }
 
         return $query;
+    }
+
+    private function getQueryByConds($input) {
+        $project_name = isset($input['project_name']) ?  $input['project_name'] : '';
+        $estimated_delivery_date_from = isset($input['estimated_delivery_date_from']) ? $input['estimated_delivery_date_from'] : '';
+        $estimated_delivery_date_to = isset($input['estimated_delivery_date_to']) ? $input['estimated_delivery_date_to'] : '';
+        $search_range = isset($input['search_range']) ? $input['search_range'] : '';
+
+        $query = $this->queryConds(
+            $project_name, 
+            $estimated_delivery_date_from, 
+            $estimated_delivery_date_to,
+            $search_range
+        );
+        
+        return $query;
+    }
+
+    private function getProjectsByConds($input) {
+        
+        $query = $this->getQueryByConds($input);
+        
+        $projects = $query->orderBy('id','asc')->get();
+
+        return $projects;
     }
 
     /**
@@ -286,15 +312,10 @@ class ProjectController extends Controller
     /**
      * CSVダウンロード
      */
-    public function csv_download(Request $request)
+    public function csv_download_old(Request $request)
     {
-        $project_name = $request->session()->get('project.project_name');
-        $estimated_delivery_date_from = $request->session()->get('project.est_delivery_date_from');
-        $estimated_delivery_date_to = $request->session()->get('project.est_delivery_date_to');
-        $search_range = $request->session()->get('project.search_range');
-        
-        $query = $this->queryConds($project_name, $estimated_delivery_date_from, $estimated_delivery_date_to, $search_range);
-        $projects = $query->orderBy('id')->select(['id', 'project_name', 'order_date'])->get();
+        $input = $request->input();
+        $query = $this->getQueryByConds($input);
                
         return  new StreamedResponse(
             function () {
@@ -305,18 +326,7 @@ class ProjectController extends Controller
                 mb_convert_variables("SJIS-win", "UTF-8", $header);
                 fputcsv($stream, $header);
 
-                // foreach ($projects->chunk(100) as $chunk) {
-                //     foreach ($chunk as $project) {
-                //         mb_convert_variables("SJIS-win", "UTF-8", $project);
-                //         fputcsv($stream, [
-                //             $project->id, 
-                //             $project->project_name,
-                //             $project->order_date
-                //         ]);
-                //     }
-                // }
-                
-                Project::chunkById(100, function ($projects) use ($stream) {
+                Project::chunk(1000, function ($projects) use ($stream) {
                     foreach ($projects as $project) {
                         mb_convert_variables("SJIS-win", "UTF-8", $project);
                         fputcsv($stream, [
@@ -338,11 +348,50 @@ class ProjectController extends Controller
     }
 
     /**
+     * CSVダウンロード
+     */
+    public function csv_download(Request $request)
+    {
+        $input = $request->input();
+        $query = $this->getQueryByConds($input);
+               
+        $stream = fopen('php://output', 'w');
+        // ExcelでUTF-8と認識させるためにBOMを付ける
+        //fwrite($stream, '\xEF\xBB\xBF');
+        $header = ['プロジェクトID', 'プロジェクト名称', '受注日'];
+        mb_convert_variables("SJIS-win", "UTF-8", $header);
+        fputcsv($stream, $header);
+
+        $query->chunk(1000, function ($projects) use ($stream) {
+            foreach ($projects as $project) {
+                mb_convert_variables("SJIS-win", "UTF-8", $project);
+                fputcsv($stream, [
+                    $project->id, 
+                    $project->project_name,
+                    $project->order_date
+                ]);
+            }
+        });
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="projects.csv"'
+        ];
+
+        return Response::make(
+            stream_get_contents($stream),
+            200,
+            $headers
+        );
+    }
+
+    /**
      * Excelダウンロード
      */
-    public function excel_download()
+    public function excel_download(Request $request)
     {
-        $projects = Project::all();
+        $input = $request->input();
+        $projects = $this->getProjectsByConds($input);
         $view = \view('project.excel_download', ['projects'=>$projects]);
         return \Excel::download(new ProjectExport($view), 'projects.xlsx');
     }
@@ -350,9 +399,10 @@ class ProjectController extends Controller
     /**
      * PDFダウンロード
      */
-    public function pdf_download()
+    public function pdf_download(Request $request)
     {
-        $projects = Project::all();
+        $input = $request->input();
+        $projects = $this->getProjectsByConds($input);
         // //$pdf = app('dompdf.wrapper');
         // //$pdf->loadView('project.pdf_download', ['projects' => $projects]);
         $pdf = \PDF::loadView('project.pdf_download', ['projects' => $projects]);
