@@ -459,7 +459,7 @@ class ProjectController extends Controller
         return view('project.csv_index');
     }
 
-    public function csv_import_1(Request $request)
+    public function csv_import(Request $request)
     {
         Log::debug('Import 開始時間'. date("Y/m/d H:m:s"));
 
@@ -476,10 +476,8 @@ class ProjectController extends Controller
 
         // アップロードしたファイルの絶対パスを取得
         $file_path = $request->file('file_upload')->path($uploaded_file);
-
-
     
-$temp_table_sql = <<< EOF
+        $temp_table_sql = <<< TEMP_TABLE
             CREATE TEMPORARY TABLE csv_table (
                 line_num int(10) UNSIGNED NOT NULL, 
                 delete_flg varchar(1) DEFAULT NULL,
@@ -490,9 +488,8 @@ $temp_table_sql = <<< EOF
                 project_status varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                 development_progress tinyint(4) DEFAULT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        EOF;
+        TEMP_TABLE;
         DB::statement($temp_table_sql);
-
 
         $file_path = 'C:/wks/laravel_import_csv.csv';
         $new_line = '\r\n';
@@ -501,14 +498,15 @@ $temp_table_sql = <<< EOF
             LOAD DATA LOCAL INFILE '$file_path' INTO TABLE csv_table CHARACTER SET UTF8 FIELDS TERMINATED BY ',' LINES TERMINATED BY '$new_line' IGNORE 1 LINES (line_num,delete_flg,id,project_name,order_date,estimated_delivery_date,project_status,development_progress); 
         LOAD_DATA;
 
-//       $pdo = DB::connection()->getPdo();  
-//       $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-//       $pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-//       $pdo->setAttribute(\PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES UTF8");
-//       $pdo->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
-//       $pdo->setAttribute(\PDO::MYSQL_ATTR_LOCAL_INFILE, true);
-// $stmt = $pdo->prepare($load_data_cmd);
-// $stmt->execute();
+      $pdo = DB::connection()->getPdo();  
+      // $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+      // $pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+      // $pdo->setAttribute(\PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES UTF8");
+      // $pdo->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+      // $pdo->setAttribute(\PDO::MYSQL_ATTR_LOCAL_INFILE, true);
+$stmt = $pdo->prepare($load_data_cmd,array(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true));
+$stmt->execute();
+
 
         //$pdo = DB::connection()->getPdo()->prepare($load_data_cmd);
         //$pdo->execute();
@@ -591,7 +589,7 @@ $temp_table_sql = <<< EOF
         return redirect('/project/csv_index')->with('message', '正常にインポートしました。');
     }
 
-    public function csv_import(Request $request)
+    public function csv_import_2(Request $request)
     {
         Log::debug('Import 開始時間'. date("Y/m/d H:m:s"));
 

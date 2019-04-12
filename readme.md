@@ -7,6 +7,7 @@
 - Excel Batch Import|Import|Download(Laravel-excel)
 - Pdf Download(Laravel-dompdf) 
 - Intervention Image
+- Multiple Authentication
 
 ## Memo
 - Article CRUD[/]
