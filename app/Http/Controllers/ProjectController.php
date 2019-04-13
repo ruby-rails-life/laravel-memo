@@ -163,10 +163,14 @@ class ProjectController extends Controller
     {
         $rules = [
             'project_name' => 'required', 
+            'project_image' => 'required|file|mimetypes:image/jpeg|mimes:jpg,jpeg',
         ];
 
         $messages = array(
-            'project_name.required' => 'ProjectNameを入力してください。',
+            'project_image.required'  => 'ファイルを選択してください。',
+            'project_image.file'      => 'ファイルアップロードに失敗しました。',
+            'project_image.mimetypes' => 'ファイル形式が不正です。',
+            'project_image.mimes'     => 'ファイル拡張子が異なります。',
         );
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -176,10 +180,10 @@ class ProjectController extends Controller
             $project_image = "";
             $input = $request->all();
 
-            if (isset($input['file_upload'])) {
-                $fileName = $input['file_upload']->getClientOriginalName();
+            if (isset($input['project_image'])) {
+                $fileName = $input['project_image']->getClientOriginalName();
                 $fileName = time()."@".$fileName;
-                $image = Image::make($input['file_upload']->getRealPath());
+                $image = Image::make($input['project_image']->getRealPath());
  
                 //画像リサイズ ※追加
                 // $image->resize(100, null, function ($constraint) {

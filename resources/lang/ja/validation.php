@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'required' => ':attribute を正しく入力してください。',
+    'required' => ':attribute を入力してください。',
 
     'kana' => ':attributeはひらがなで入力をしてください。',
 
@@ -13,6 +13,7 @@ return [
 
     'attributes' => [
     	'content' => '本文', 
-    	'category_id' => 'カテゴリ'
+    	'category_id' => 'カテゴリ',
+    	'project_name' => 'プロジェクト名称'
     ],
 ];
