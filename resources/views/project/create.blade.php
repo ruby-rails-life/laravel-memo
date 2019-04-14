@@ -11,7 +11,7 @@
       <div class="form-group row">
         <label for="txtProjectName" class="col-md-2 col-form-label">プロジェクト名称</label>
         <div class="col-md-10">
-          <input type="text" class="form-control @if($errors->has('project_name')) is-invalid @endif" id="txtProjectName" name="project_name">
+          <input type="text" class="form-control @if($errors->has('project_name')) is-invalid @endif" id="txtProjectName" name="project_name" value="{{ old('project_name') }}">
           @if($errors->has('project_name')) 
           <span class="invalid-feedback">{{ $errors->first('project_name') }}</span> 
           @endif

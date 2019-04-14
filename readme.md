@@ -8,6 +8,7 @@
 - Pdf Download(Laravel-dompdf) 
 - Intervention Image
 - Multiple Authentication
+- Event-Listener-Subscribe
 
 ## Memo
 - Article CRUD[/]

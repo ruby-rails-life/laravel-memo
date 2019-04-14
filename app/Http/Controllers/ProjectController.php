@@ -14,6 +14,9 @@ use App\Exports\ProjectExport;
 use App\Imports\ProjectImport;
 use Intervention\Image\Facades\Image;
 use Response;
+use App\Events\ProjectCreated;
+use App\Events\ProjectUpdated;
+use App\Events\ProjectDeleted;
 
 class ProjectController extends Controller
 {
@@ -222,6 +225,8 @@ class ProjectController extends Controller
             if (!empty($project_image))  $project->project_image = $project_image;
             
             $project->save();
+
+            event(new ProjectCreated($project));
  
             return redirect('/project')->with('message', '新規登録が完了しました。');
 
@@ -284,6 +289,8 @@ class ProjectController extends Controller
             $project->development_progress = $request->development_progress;
             $project->save();
 
+            event(new ProjectUpdated($project));
+
             return redirect('/project')->with('message', '編集が完了しました。');
         }else{
             return back()->withErrors($validator)->withInput();
@@ -298,8 +305,12 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        Project::destroy($id);
+        $project = Project::find($id);
 
+        Project::destroy($id);
+       
+        event(new ProjectDeleted($project));
+        
         return redirect('/project');
     }
 

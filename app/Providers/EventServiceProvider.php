@@ -22,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\PostCreated' => [
             'App\Listeners\SendCreationNotification',
         ],
+        'App\Events\ProjectCreated' => [
+            'App\Listeners\CreateProjectNotification',
+        ],
     ];
 
     /**
@@ -31,6 +34,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $subscribe = [
         'App\Listeners\PostEventSubscriber',
+        'App\Listeners\ProjectEventSubscriber',
     ];
 
     /**
@@ -44,4 +48,14 @@ class EventServiceProvider extends ServiceProvider
 
         //
     }
+
+    // /**
+    //  * イベントとリスナーを自動的に検出するか指定
+    //  *
+    //  * @return bool
+    //  */
+    // public function shouldDiscoverEvents()
+    // {
+    //     return true;
+    // }
 }
