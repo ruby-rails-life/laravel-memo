@@ -46,6 +46,26 @@
         <td>@if($project->developer_in_charge_id !=0){{ $project->Developer->name }}@endif</td>
       </tr>
     </tbody>
-  </table>    
-         
+  </table>
+
+  <p>通知</p>    
+  
+  <table class="table table-sm table-bordered">
+    <tbody>
+      @foreach ($project->notifications as $notification)
+      @foreach ($notification->data as $key => $value)
+      <tr>
+        <td class="field-bg-color">{{ $key }}</td>
+        <td>
+          @if($key <> 'project_status')
+            {{ $value }}
+          @elseif ($value <>'')
+            {{ $arrProjectStatus[$value] }}
+          @endif
+        </td>
+      </tr>
+      @endforeach
+      @endforeach
+    </tbody>
+  </table>         
 @stop

@@ -5,8 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 
-class Project extends Model
+class Project extends Model implements HasLocalePreference
 {
     use Notifiable;
     use SoftDeletes;
@@ -36,5 +37,15 @@ class Project extends Model
     public function routeNotificationForMail($notification)
     {
         //return $this->email_address;
+    }
+
+    /**
+     * ユーザーの希望するローケルの取得
+     *
+     * @return string
+     */
+    public function preferredLocale()
+    {
+        return 'en';
     }
 }

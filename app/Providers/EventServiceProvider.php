@@ -25,6 +25,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ProjectCreated' => [
             'App\Listeners\CreateProjectNotification',
         ],
+
+        'Illuminate\Notifications\Events\NotificationSent' => [
+            'App\Listeners\LogNotification',
+        ],
     ];
 
     /**

@@ -18,7 +18,8 @@ use App\Events\ProjectCreated;
 use App\Events\ProjectUpdated;
 use App\Events\ProjectDeleted;
 use App\Notifications\ProjectCreatedNotification;
-use App\Notifications\ProjectCreatedMarkDown;
+use App\Notifications\ProjectCreatedMarkdown;
+use App\Notifications\ProjectCreatedDatabase;
 
 class ProjectController extends Controller
 {
@@ -231,7 +232,8 @@ class ProjectController extends Controller
             //イベント
             event(new ProjectCreated($project));
             //通知
-            $project->notify(new ProjectCreatedMarkDown($project));
+            $project->notify(new ProjectCreatedDatabase($project));
+            //$project->notify(new ProjectCreatedMarkdown($project));
             //$project->notify(new ProjectCreatedNotification($project));
             // \Notification::route('mail', 'xxx@yyy.com')
             //     ->notify(new ProjectCreatedNotification($project));

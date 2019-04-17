@@ -7,12 +7,12 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ProjectCreatedMarkdown extends Notification
+class ProjectCreatedDatabase extends Notification
 {
     use Queueable;
 
     public $project;
-
+    
     /**
      * Create a new notification instance.
      *
@@ -31,7 +31,7 @@ class ProjectCreatedMarkdown extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -42,13 +42,10 @@ class ProjectCreatedMarkdown extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url('/');
-
         return (new MailMessage)
-                ->subject('Project Created')
-                ->markdown('mail.project.created', ['url' => $url, 'project'=>$this->project]);
-
-        //return (new MailMessage)->markdown('mail.project.created');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -60,7 +57,8 @@ class ProjectCreatedMarkdown extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'project_name' => $this->project->project_name,
+            'project_status' => $this->project->project_status,
         ];
     }
 }
