@@ -18,6 +18,7 @@ use App\Events\ProjectCreated;
 use App\Events\ProjectUpdated;
 use App\Events\ProjectDeleted;
 use App\Notifications\ProjectCreatedNotification;
+use App\Notifications\ProjectCreatedMarkDown;
 
 class ProjectController extends Controller
 {
@@ -167,11 +168,11 @@ class ProjectController extends Controller
     {
         $rules = [
             'project_name' => 'required', 
-            'project_image' => 'required|file|mimetypes:image/jpeg|mimes:jpg,jpeg',
+            //'project_image' => 'required|file|mimetypes:image/jpeg|mimes:jpg,jpeg',
         ];
 
         $messages = array(
-            'project_image.required'  => 'ファイルを選択してください。',
+            //'project_image.required'  => 'ファイルを選択してください。',
             'project_image.file'      => 'ファイルアップロードに失敗しました。',
             'project_image.mimetypes' => 'ファイル形式が不正です。',
             'project_image.mimes'     => 'ファイル拡張子が異なります。',
@@ -230,7 +231,8 @@ class ProjectController extends Controller
             //イベント
             event(new ProjectCreated($project));
             //通知
-            $project->notify(new ProjectCreatedNotification($project));
+            $project->notify(new ProjectCreatedMarkDown($project));
+            //$project->notify(new ProjectCreatedNotification($project));
             // \Notification::route('mail', 'xxx@yyy.com')
             //     ->notify(new ProjectCreatedNotification($project));
 
