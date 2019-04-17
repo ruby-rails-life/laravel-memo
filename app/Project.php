@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Project extends Model
 {
+    use Notifiable;
     use SoftDeletes;
 
     public function Sales(){
@@ -24,4 +26,15 @@ class Project extends Model
         'project_status',
         'development_progress',
     ];
+
+    /**
+     * メールチャンネルに対する通知をルートする
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForMail($notification)
+    {
+        //return $this->email_address;
+    }
 }

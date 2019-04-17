@@ -80,7 +80,7 @@
             <td class="text-center">{{ $project->estimated_delivery_date }}</td>
             <td class="text-center">@if($project->sales_staff_id !=0){{ $project->Sales->name }}@endif</td>
             <td class="text-center">@if($project->developer_in_charge_id !=0){{ $project->Developer->name }}@endif</td>
-            <td class="text-center"><a href="/project/{{$project->id}}/edit"><i class="fas fa-edit fa-lg"></i></i></a></td>
+            <td class="text-center"><a href="/project/{{$project->id}}/edit"><i class="fas fa-edit fa-lg"></i></a></td>
             <td class="text-center">
               @if($project->trashed())
               <a href="javascript:void(0);" onclick="res('{{$project->id}}');"> 

@@ -17,6 +17,7 @@ use Response;
 use App\Events\ProjectCreated;
 use App\Events\ProjectUpdated;
 use App\Events\ProjectDeleted;
+use App\Notifications\ProjectCreatedNotification;
 
 class ProjectController extends Controller
 {
@@ -226,8 +227,13 @@ class ProjectController extends Controller
             
             $project->save();
 
+            //イベント
             event(new ProjectCreated($project));
- 
+            //通知
+            $project->notify(new ProjectCreatedNotification($project));
+            // \Notification::route('mail', 'xxx@yyy.com')
+            //     ->notify(new ProjectCreatedNotification($project));
+
             return redirect('/project')->with('message', '新規登録が完了しました。');
 
         } else {
