@@ -20,6 +20,7 @@ use App\Events\ProjectDeleted;
 use App\Notifications\ProjectCreatedNotification;
 use App\Notifications\ProjectCreatedMarkdown;
 use App\Notifications\ProjectCreatedDatabase;
+use App\Mail\ProjectCreatedMail;
 
 class ProjectController extends Controller
 {
@@ -230,13 +231,17 @@ class ProjectController extends Controller
             $project->save();
 
             //イベント
-            event(new ProjectCreated($project));
+            //event(new ProjectCreated($project));
             //通知
-            $project->notify(new ProjectCreatedDatabase($project));
+            //$project->notify(new ProjectCreatedDatabase($project));
             //$project->notify(new ProjectCreatedMarkdown($project));
             //$project->notify(new ProjectCreatedNotification($project));
             // \Notification::route('mail', 'xxx@yyy.com')
             //     ->notify(new ProjectCreatedNotification($project));
+
+            //メール
+            //\Mail::to('xxx@yyy.com')->send(new ProjectCreatedMail($project));
+            //\Mail::to('xxx@yyy.com')->queue(new ProjectCreatedMail($project));
 
             return redirect('/project')->with('message', '新規登録が完了しました。');
 
@@ -332,6 +337,13 @@ class ProjectController extends Controller
 
        return redirect('/project');
        //return redirect()->route('project.index', ['search_range' => '3']);
+    }
+
+    public function mailable($id)
+    {
+        $project = Project::withTrashed()->find($id);
+        
+        return new ProjectCreatedMail($project);
     }
 
     /**

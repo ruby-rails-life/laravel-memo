@@ -123,6 +123,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/project/pdf_download', 'ProjectController@pdf_download')->name('project.pdf_download');
   Route::get('/project/excel_index', 'ProjectController@excel_index')->name('project.excel_index');
   Route::post('/project/excel_import', 'ProjectController@excel_import');
+  Route::get('/project/{id}/mailable', 'ProjectController@mailable');
   Route::resource('/project', 'ProjectController');
 
 });
