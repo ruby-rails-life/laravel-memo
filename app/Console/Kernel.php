@@ -26,6 +26,18 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        $schedule->command('email:send 1')
+                 ->dailyAt('10:00');
+                 // ->before(function () {
+                 //    // タスク開始時…
+                 // })
+                 // ->after(function () {
+                 //   // タスク終了時…
+                 // })
+                 // ->pingBeforeIf($condition, $url)
+                 // ->thenPingIf($condition, $url);
+
     }
 
     /**

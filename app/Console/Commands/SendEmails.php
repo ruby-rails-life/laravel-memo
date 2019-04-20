@@ -70,7 +70,9 @@ class SendEmails extends Command
 
         foreach ($projects as $project) {
             //$this->performTask($project);
-            \Mail::to($user->email)->queue(new ProjectCreatedMail($project));
+            //\Mail::to($user->email)->queue(new ProjectCreatedMail($project));
+            \Mail::to($user->email)->send(new ProjectCreatedMail($project));
+
             $bar->advance();
         }
 
