@@ -16,3 +16,16 @@ use Illuminate\Foundation\Inspiring;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+
+// Artisan::command('email:send {user}', function () {
+//     $name = $this->ask('What is your name?');
+//     $password = $this->secret('What is the password?');
+//     if ($this->confirm('Do you wish to continue?')) {
+//         //
+//     }
+
+//     $name = $this->anticipate('What is your name?', ['Grace', 'Tom']);
+//     $name = $this->choice('What is your name?', ['Grace', 'Tom'], 0);
+
+// })->describe('Send e-mails to a user');
