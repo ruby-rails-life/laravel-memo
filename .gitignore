@@ -13,3 +13,4 @@ public/images/
 public/assets/
 public/dist/
 storage/
+.env.testing

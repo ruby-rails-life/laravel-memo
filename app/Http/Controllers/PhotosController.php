@@ -54,15 +54,16 @@ class PhotosController extends Controller
               $constraint->aspectRatio();
         });
  
-        // $image->save(storage_path() . '/images/' . $fileName);
-        // $path = '/images/' . $fileName;
-        $path = Storage::disk('public')->putFileAs(
-            'images', $request->file('fileName'), $fileName
-        );
+        $path = 'images/' . $fileName;
+        $image->save(storage_path() . '/app/public/' . $path);
+        
+        // $path = Storage::disk('public')->putFileAs(
+        //     'images', $request->file('fileName'), $fileName
+        // );
  
         //↓ 追加 ↓
         $photo = new Photo();
-        $photo->path = 'images/' . $fileName;
+        $photo->path = $path;
         $photo->save();
  
         return redirect('/photos')->with('status', 'ファイルアップロードの処理完了！');
