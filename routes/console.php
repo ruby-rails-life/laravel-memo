@@ -29,3 +29,16 @@ Artisan::command('inspire', function () {
 //     $name = $this->choice('What is your name?', ['Grace', 'Tom'], 0);
 
 // })->describe('Send e-mails to a user');
+
+
+Artisan::command('question', function () {
+    $name = $this->ask('What is your name?');
+
+    $language = $this->choice('Which language do you program in?', [
+        'PHP',
+        'Ruby',
+        'Python',
+    ]);
+
+    $this->line('Your name is '.$name.' and you program in '.$language.'.');
+});

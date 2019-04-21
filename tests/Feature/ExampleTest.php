@@ -67,4 +67,18 @@ class ExampleTest extends TestCase
         // ファイルが存在しないことをアサートする
         //Storage::disk('public')->assertMissing('missing.jpg');
     }
+
+    /**
+     * コンソールコマンドのテスト
+     *
+     * @return void
+     */
+    public function test_console_command()
+    {
+        $this->artisan('question')
+             ->expectsQuestion('What is your name?', 'Taylor Otwell')
+             ->expectsQuestion('Which language do you program in?', 'PHP')
+             ->expectsOutput('Your name is Taylor Otwell and you program in PHP.')
+             ->assertExitCode(0);
+    }
 }
