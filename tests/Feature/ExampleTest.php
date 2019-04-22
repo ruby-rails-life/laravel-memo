@@ -11,6 +11,8 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ExampleTest extends TestCase
 {
+    use RefreshDatabase;
+
     // public function setUp()
     // {
     //     dd(env('APP_ENV'), env('DB_HOST'));
@@ -80,5 +82,16 @@ class ExampleTest extends TestCase
              ->expectsQuestion('Which language do you program in?', 'PHP')
              ->expectsOutput('Your name is Taylor Otwell and you program in PHP.')
              ->assertExitCode(0);
+    }
+
+    public function testDatabase()
+    {
+        // アプリケーションを呼び出す…
+        $this->assertDatabaseHas('users', [
+            'email' => 'xxxx@yyy.com'
+        ]);
+
+        //$project = factory(App\Project::class, 3)->make();
+        $project = factory(\App\Project::class, 3)->create();
     }
 }
