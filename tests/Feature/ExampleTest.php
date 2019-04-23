@@ -94,4 +94,65 @@ class ExampleTest extends TestCase
         //$project = factory(App\Project::class, 3)->make();
         $project = factory(\App\Project::class, 3)->create();
     }
+
+    public function testProjectCreated()
+    {
+        Event::fake();
+
+        $project = factory(\App\Project::class)->create();
+
+        // Event::assertDispatched(ProjectCreated::class, function ($e) use ($project) {
+        //     return $e->project->id === $public->id;
+        // });
+
+        // イベントが２回ディスパッチされることをアサート
+        //Event::assertDispatched(ProjectCreated::class, 2);
+
+        // イベントがディスパッチされないことをアサート
+        Event::assertNotDispatched(ProjectCreated::class);
+    }
+
+    public function testProjectCreatedLimit()
+    {
+        $project = Event::fakeFor(function () {
+            $project = factory(Project::class)->create();
+
+            //Event::assertDispatched(ProjectCreated::class);
+            Event::assertNotDispatched(ProjectCreated::class);
+
+            return $project;
+        });
+
+        // イベントは通常通りにディスパッチされ、オブザーバが実行される
+        //$project->update([...]);
+    }
+
+    public function testProjectCreatedMail()
+    {
+        Mail::fake();
+
+        // Assert that no mailables were sent...
+        Mail::assertNothingSent();
+
+        $project = factory(\App\Project::class)->create();
+
+        // Mail::assertSent(ProjectCreatedMail::class, function ($mail) use ($project) {
+        //     return $mail->project->id === $project->id;
+        // });
+
+        // // メッセージが指定したユーザーに届いたことをアサート
+        // Mail::assertSent(ProjectCreatedMail::class, function ($mail) use ($project) {
+        //     return $mail->hasTo('...') &&
+        //            $mail->hasCc('...') &&
+        //            $mail->hasBcc('...');
+        // });
+
+        // // mailableが２回送信されたことをアサート
+        // Mail::assertSent(ProjectCreatedMail::class, 2);
+
+        // mailableが送られなかったことをアサート
+        //Mail::assertNotSent(AnotherMailable::class);
+
+        //Mail::assertNotSent(ProjectCreatedMail::class);
+    }
 }

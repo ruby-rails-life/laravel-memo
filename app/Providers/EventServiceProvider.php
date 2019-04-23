@@ -31,12 +31,12 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         //メール
-        'Illuminate\Mail\Events\MessageSending' => [
-            'App\Listeners\LogSendingMessage',
-        ],
-        'Illuminate\Mail\Events\MessageSent' => [
-            'App\Listeners\LogSentMessage',
-        ],
+        // 'Illuminate\Mail\Events\MessageSending' => [
+        //     'App\Listeners\LogSendingMessage',
+        // ],
+        // 'Illuminate\Mail\Events\MessageSent' => [
+        //     'App\Listeners\LogSentMessage',
+        // ],
     ];
 
     /**
