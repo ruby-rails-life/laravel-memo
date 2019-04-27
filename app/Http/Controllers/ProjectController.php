@@ -541,6 +541,7 @@ class ProjectController extends Controller
         $csv_errors = [];
 
         //Check
+        //ID存在チェック
         $check_sql = <<< CHECK_SQL
             SELECT line_num
                   ,id
@@ -559,7 +560,28 @@ class ProjectController extends Controller
                 $csv_errors = array_merge($csv_errors, [$error_msg]);
             }
             return redirect('/project/csv_index')->with('errors', $csv_errors);
-        }       
+        }
+
+        //ID重複チェック
+        $check_sql = <<< CHECK_SQL
+            SELECT csv.id
+              FROM (
+                    SELECT id
+                          ,COUNT(id) AS cnt
+                      FROM csv_table
+                     GROUP BY id
+                   ) AS csv
+             WHERE csv.id <> ''
+               AND csv.cnt > 1       
+        CHECK_SQL; 
+        $check_list = DB::select($check_sql);
+        if (count($check_list) >= 1) {
+            foreach ($check_list as $check) {
+                $error_msg = sprintf("[id=%d]は複数存在します", $check->id);
+                $csv_errors = array_merge($csv_errors, [$error_msg]);
+            }
+            return redirect('/project/csv_index')->with('errors', $csv_errors);
+        }
 
         $insert_sql = <<< INSERT_SQL
             INSERT INTO projects(
