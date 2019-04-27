@@ -513,45 +513,54 @@ class ProjectController extends Controller
 
         // アップロードしたファイルの絶対パスを取得
         $file_path = $request->file('file_upload')->path($uploaded_file);
+        Log::info('File***:' . $file_path);
     
         $temp_table_sql = <<< TEMP_TABLE
             CREATE TEMPORARY TABLE csv_table (
-                line_num int(10) UNSIGNED NOT NULL, 
+                line_num int(10) NOT NULL AUTO_INCREMENT, 
                 delete_flg varchar(1) DEFAULT NULL,
                 id varchar(100) DEFAULT NULL,
                 project_name varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                 order_date date DEFAULT NULL,
                 estimated_delivery_date date DEFAULT NULL,
                 project_status varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-                development_progress tinyint(4) DEFAULT NULL
+                development_progress tinyint(4) DEFAULT NULL,
+                PRIMARY KEY (line_num)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
         TEMP_TABLE;
         DB::statement($temp_table_sql);
 
-        $file_path = 'C:/wks/laravel_import_csv.csv';
+        //$file_path = 'path/to/csv';
         $new_line = '\r\n';
 
         $load_data_cmd = <<< LOAD_DATA
-            LOAD DATA LOCAL INFILE '$file_path' INTO TABLE csv_table CHARACTER SET UTF8 FIELDS TERMINATED BY ',' LINES TERMINATED BY '$new_line' IGNORE 1 LINES (line_num,delete_flg,id,project_name,order_date,estimated_delivery_date,project_status,development_progress); 
+            LOAD DATA LOCAL INFILE '$file_path' INTO TABLE csv_table CHARACTER SET UTF8 FIELDS TERMINATED BY ',' LINES TERMINATED BY '$new_line' IGNORE 1 LINES (delete_flg,id,project_name,order_date,estimated_delivery_date,project_status,development_progress); 
         LOAD_DATA;
-
-      $pdo = DB::connection()->getPdo();  
-      // $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-      // $pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-      // $pdo->setAttribute(\PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES UTF8");
-      // $pdo->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
-      // $pdo->setAttribute(\PDO::MYSQL_ATTR_LOCAL_INFILE, true);
-$stmt = $pdo->prepare($load_data_cmd,array(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true));
-$stmt->execute();
-
-
-        //$pdo = DB::connection()->getPdo()->prepare($load_data_cmd);
-        //$pdo->execute();
-        //DB::statement($load_data_cmd);
-
-        //$this->insertCsvData('csv_table', $array_csvdata);
-        //DB::table('csv_table')->insert($array_csvdata);
+        DB::statement($load_data_cmd);
         
+        $csv_errors = [];
+
+        //Check
+        $check_sql = <<< CHECK_SQL
+            SELECT line_num
+                  ,id
+              FROM csv_table AS csv
+             WHERE id <> ''
+               AND NOT EXISTS (
+                   SELECT id
+                     FROM projects AS proj
+                    WHERE proj.id = csv.id                
+              )  
+        CHECK_SQL; 
+        $check_list = DB::select($check_sql);
+        if (count($check_list) >= 1) {
+            foreach ($check_list as $check) {
+                $error_msg = sprintf("Line %d : [id=%d]はprojectsテーブルに存在しません", $check->line_num, $check->id);
+                $csv_errors = array_merge($csv_errors, [$error_msg]);
+            }
+            return redirect('/project/csv_index')->with('errors', $csv_errors);
+        }       
+
         $insert_sql = <<< INSERT_SQL
             INSERT INTO projects(
                 project_name,
@@ -606,20 +615,7 @@ $stmt->execute();
         DELETE_SQL;
 
         DB::statement($delete_sql);
-
-        // $file = new \SplFileObject($file_path);
-        // $file->setFlags(
-        //     \SplFileObject::READ_CSV |       // CSV 列として行を読み込む
-        //     \SplFileObject::READ_AHEAD |     // 先読み/巻き戻しで読み出す。
-        //     \SplFileObject::SKIP_EMPTY |     // 空行は読み飛ばす
-        //     \SplFileObject::DROP_NEW_LINE    // 行末の改行を読み飛ばす
-        // );
-
-        // $array_csvdata = $this->makeCsvDataTemp($file);
-
-        $file = null;
-        unlink($file_path);
-       
+        //unlink($file_path);
         
         Log::debug('Import 終了時間'. date("Y/m/d H:m:s"));
 

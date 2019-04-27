@@ -3,6 +3,7 @@
 ## My Project
 - Project Resource
 - Csv Import(Insert, Update, Delete, Validation)
+  - [LOAD DATA LOCAL INFILE](https://qiita.com/hondy12345/items/ca5fdc4573292f3fcf5d)
 - Csv Download(chunk)
 - Excel Batch Import|Import|Download(Laravel-excel)
 - Pdf Download(Laravel-dompdf) 
