@@ -1,15 +1,5 @@
 @extends('layouts.proj')
 @section('content')
-
-@if(session('message'))
- <div class="bg-info">
-  <p>{{ session('message') }}</p>
-</div>
-@endif
-@foreach($errors as $message)
-  <p class="bg-danger">{{ $message }}</p>
-@endforeach
-
   <form method="post" action="/project/csv_import" enctype="multipart/form-data">
     @csrf
     <div class="form-group row">
@@ -29,6 +19,16 @@
       </div>
     </div>  
   </form>
+  @foreach($errors as $message)
+    <p class="text-danger">{{ $message }}</p>
+  @endforeach
+
+  @if (isset($csv_info))
+    @foreach($csv_info as $info)
+      <p class="text-success">{{ $info }}</p>
+    @endforeach  
+  @endif
+
 @stop
 
 @section('script')
