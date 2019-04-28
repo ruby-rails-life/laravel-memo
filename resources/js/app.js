@@ -22,6 +22,8 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+Vue.component('todo-component', require('./components/TodoComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -29,36 +31,37 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app',
-    data: {
-        todos: [],
-        new_todo: ''
-    },
-    methods: {
-        fetchTodos: function(){
-            axios.get('/api/get').then((res)=>{
-                this.todos = res.data
-            });
-        },
-        addTodo: function(){
-            axios.post('/api/add',{
-                title: this.new_todo
-            }).then((res)=>{
-                this.todos = res.data;
-                this.new_todo = '';
-            }).catch(error => {
-                alert(error.response)
-            });
-        },
-        deleteTodo: function(task_id){
-            axios.post('/api/del',{
-                id: task_id
-            }).then((res)=>{
-                this.todos = res.data
-            })
-        }
-    },
-    created(){
-        this.fetchTodos();
-    }
+    el: '#app'
+    // el: '#app',
+    // data: {
+    //     todos: [],
+    //     new_todo: ''
+    // },
+    // methods: {
+    //     fetchTodos: function(){
+    //         axios.get('/api/get').then((res)=>{
+    //             this.todos = res.data
+    //         });
+    //     },
+    //     addTodo: function(){
+    //         axios.post('/api/add',{
+    //             title: this.new_todo
+    //         }).then((res)=>{
+    //             this.todos = res.data;
+    //             this.new_todo = '';
+    //         }).catch(error => {
+    //             alert(error.response)
+    //         });
+    //     },
+    //     deleteTodo: function(task_id){
+    //         axios.post('/api/del',{
+    //             id: task_id
+    //         }).then((res)=>{
+    //             this.todos = res.data
+    //         })
+    //     }
+    // },
+    // created(){
+    //     this.fetchTodos();
+    // }
 });

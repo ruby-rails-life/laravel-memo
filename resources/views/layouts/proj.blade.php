@@ -33,15 +33,23 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownLeft" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownProject" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               プロジェクト管理
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownLeft">
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownProject">
               <a class="dropdown-item" href="/project">プロジェクト検索</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/project/csv_index">CSVインポート</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/project/excel_index">EXCELインポート</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownVuejs" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Vue.js
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownVuejs">
+              <a class="dropdown-item" href="{{ url('/todo-component') }}">Todo-Component</a>
             </div>
           </li>
         </ul>

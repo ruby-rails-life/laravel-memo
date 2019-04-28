@@ -71,6 +71,10 @@ Route::group(['middleware' => ['auth']], function () {
     return view('vue.todo');
   });
 
+  Route::get('/todo-component', function () {
+    return view('vue.todo-component');
+  });
+
   Route::get('/user', 'UserController@index');
 
   Route::resource('/clover','CloverController');
