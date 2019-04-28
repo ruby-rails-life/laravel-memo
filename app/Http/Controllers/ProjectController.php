@@ -609,8 +609,8 @@ class ProjectController extends Controller
                 development_progress
             )
             SELECT project_name,
-                   order_date,
-                   estimated_delivery_date,
+                   CASE WHEN YEAR(order_date) = '0000' THEN NULL ELSE order_date END,
+                   CASE WHEN YEAR(estimated_delivery_date) = '0000' THEN NULL ELSE estimated_delivery_date END,
                    project_status,
                    development_progress
               FROM csv_table
@@ -624,8 +624,8 @@ class ProjectController extends Controller
             UPDATE projects proj,
                    csv_table csv
                SET proj.project_name = csv.project_name,
-                   proj.order_date = csv.order_date,
-                   proj.estimated_delivery_date = csv.estimated_delivery_date,
+                   proj.order_date = CASE WHEN YEAR(csv.order_date) = '0000' THEN NULL ELSE csv.order_date END,
+                   proj.estimated_delivery_date = CASE WHEN YEAR(csv.estimated_delivery_date) = '0000' THEN NULL ELSE csv.estimated_delivery_date END,
                    proj.project_status = csv.project_status,
                    proj.development_progress = csv.development_progress
              WHERE csv.delete_flg = ''
