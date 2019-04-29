@@ -50,6 +50,8 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownVuejs">
               <a class="dropdown-item" href="{{ url('/todo-component') }}">Todo-Component</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{{ url('/invoices') }}">Invoices</a>
             </div>
           </li>
         </ul>

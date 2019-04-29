@@ -130,6 +130,8 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/project/{id}/mailable', 'ProjectController@mailable');
   Route::resource('/project', 'ProjectController');
 
+  Route::resource('/invoices', 'InvoiceController');
+
 });
 
 
