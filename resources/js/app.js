@@ -23,7 +23,6 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 Vue.component('todo-component', require('./components/TodoComponent.vue').default);
-// Vue.component('invoice-component', require('./components/InvoiceComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -31,8 +30,8 @@ Vue.component('todo-component', require('./components/TodoComponent.vue').defaul
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-//const app = new Vue({
-    //el: '#app'
+const app = new Vue({
+    el: '#app'
     // el: '#app',
     // data: {
     //     todos: [],
@@ -65,9 +64,9 @@ Vue.component('todo-component', require('./components/TodoComponent.vue').defaul
     // created(){
     //     this.fetchTodos();
     // }
-//});
+});
 
-var app = new Vue({
+var invoice = new Vue({
   el: '#invoice',
   data: {
     isProcessing: false,
