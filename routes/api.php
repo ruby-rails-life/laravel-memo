@@ -21,4 +21,7 @@ Route::group(['middleware' => 'api'], function() {
   Route::get('get',  'TodoController@getTodos');
   Route::post('add', 'TodoController@addTodo');
   Route::post('del',  'TodoController@deleteTodo');
+
+  Route::resource('/books', 'BookController');
+
 });

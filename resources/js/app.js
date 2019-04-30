@@ -1,70 +1,54 @@
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
+// bootstrap.jsのrequire
 require('./bootstrap');
 
-window.Vue = require('vue');
+// vueとvue-routerの定義
+import Vue from 'vue'
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+// Vue-Router
+import router from './router'
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
 Vue.component('todo-component', require('./components/TodoComponent.vue').default);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
 const app = new Vue({
-    el: '#app'
-    // el: '#app',
-    // data: {
-    //     todos: [],
-    //     new_todo: ''
-    // },
-    // methods: {
-    //     fetchTodos: function(){
-    //         axios.get('/api/get').then((res)=>{
-    //             this.todos = res.data
-    //         });
-    //     },
-    //     addTodo: function(){
-    //         axios.post('/api/add',{
-    //             title: this.new_todo
-    //         }).then((res)=>{
-    //             this.todos = res.data;
-    //             this.new_todo = '';
-    //         }).catch(error => {
-    //             alert(error.response)
-    //         });
-    //     },
-    //     deleteTodo: function(task_id){
-    //         axios.post('/api/del',{
-    //             id: task_id
-    //         }).then((res)=>{
-    //             this.todos = res.data
-    //         })
-    //     }
-    // },
-    // created(){
-    //     this.fetchTodos();
-    // }
+    el: '#app',
+    router,
 });
+
+// const app = new Vue({
+//     el: '#app',
+//     data: {
+//         todos: [],
+//         new_todo: ''
+//     },
+//     methods: {
+//         fetchTodos: function(){
+//             axios.get('/api/get').then((res)=>{
+//                 this.todos = res.data
+//             });
+//         },
+//         addTodo: function(){
+//             axios.post('/api/add',{
+//                 title: this.new_todo
+//             }).then((res)=>{
+//                 this.todos = res.data;
+//                 this.new_todo = '';
+//             }).catch(error => {
+//                 alert(error.response)
+//             });
+//         },
+//         deleteTodo: function(task_id){
+//             axios.post('/api/del',{
+//                 id: task_id
+//             }).then((res)=>{
+//                 this.todos = res.data
+//             })
+//         }
+//     },
+//     created(){
+//         this.fetchTodos();
+//     }
+// });
 
 var invoice = new Vue({
   el: '#invoice',

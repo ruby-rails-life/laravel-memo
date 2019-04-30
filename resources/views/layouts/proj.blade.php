@@ -52,6 +52,8 @@
               <a class="dropdown-item" href="{{ url('/todo-component') }}">Todo-Component</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ url('/invoices') }}">Invoices</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{{ url('/books') }}">Books</a>
             </div>
           </li>
         </ul>

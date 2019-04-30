@@ -132,6 +132,16 @@ Route::group(['middleware' => ['auth']], function () {
 
   Route::resource('/invoices', 'InvoiceController');
 
+
+  // Other
+  // Route::get('/{any}', function () {
+  //   return view('vue_app');
+  // })->where('any', '.*');
+
+  Route::get('/books', function () {
+    return view('vue_app');
+  });
+
 });
 
 

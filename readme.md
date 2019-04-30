@@ -10,7 +10,9 @@
 - Intervention Image
 - Multiple Authentication
 - Event-Listener-Subscribe
-- Vue.js[Invoice](https://github.com/codekerala/laravel-vuejs-invoice) 
+- Vue.js
+  - [CRUD:Invoice](https://github.com/codekerala/laravel-vuejs-invoice) 
+  - vue-router(/books)
 
 ## Memo
 - Article CRUD[/]
