@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4>書籍作成</h4>
+        <h4>書籍編集</h4>
         <div class="form-group row">
             <label for="txtTitle" class="col-md-2 col-form-label">Title</label>
             <div class="col-md-10">
@@ -16,7 +16,7 @@
 
         <div class="form-group row">
             <div class="offset-md-2 col-md-10">
-                <button v-on:click="addBook" class="btn btn-primary rounded-pill">登録</button>
+                <button v-on:click="updateBook" class="btn btn-primary rounded-pill">更新</button>
                 <router-link class="btn btn-secondary rounded-pill" :to="{name: 'book-list'}">キャンセル</router-link>
             </div>
         </div>
@@ -28,18 +28,28 @@
         data() {
             return {
                 book: {
+                    id:'',
                     title:'',
                     summary:''
                 }
             }
         },
         methods: {
-            addBook(){
-                // axios.postの第１引数にルートを、第２引数にポストするデータの配列を渡します
-                axios.post('/api/books', this.book).then(res => {
+            updateBook(){
+                let uri = '/api/books/' + this.$route.params.id;
+                axios.put(uri, this.book).then(res => {
                     this.$router.push({name: 'book-list'});
                 });
+            },
+            editBook: function(){
+                let uri = '/api/books/' + this.$route.params.id + '/edit';
+                axios.get(uri).then((res)=>{
+                    this.book = res.data
+                });
             }
+        },
+        created(){
+            this.editBook();
         }
     }
 </script>

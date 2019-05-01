@@ -36,13 +36,18 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $book = new Book;
-        $book->title = $request->title;
-        $book->summary = $request->summary;
-        $book->save();
+        $this->validate($request, [
+            'title' => 'required',
+            'summary' => 'required',
+        ]);
 
-        //テストのためtitile、contentのデータをリターン
-        return ['title' => request('title'),'summary' => request('summary')];
+        // $book = new Book;
+        // $book->title = $request->title;
+        // $book->summary = $request->summary;
+        // $book->save();
+        Book::create($request->all());
+
+        return response()->json(['status' => 'success', 'msg' => 'book created successfully']);
     }
 
     /**
@@ -53,7 +58,8 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        //
+        $book = Book::find($id);
+        return $book;
     }
 
     /**
@@ -64,7 +70,8 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = Book::find($id);
+        return $book;
     }
 
     /**
@@ -76,7 +83,17 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'summary' => 'required',
+        ]);
+
+        $book = Book::find($id);
+        $book->title = $request->title;
+        $book->summary = $request->summary;
+        $book->save();
+
+        return response()->json(['status' => 'success', 'msg' => 'book updated successfully']);
     }
 
     /**
@@ -87,6 +104,8 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Book::destroy($id);
+
+        return response()->json(['status' => 'success', 'msg' => 'book deleted successfully']);   
     }
 }
