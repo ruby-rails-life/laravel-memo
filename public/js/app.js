@@ -1788,13 +1788,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       book: {
         title: '',
         summary: ''
-      }
+      },
+      errors: {}
     };
   },
   methods: {
@@ -1806,6 +1809,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.$router.push({
           name: 'book-list'
         });
+      }).catch(function (error) {
+        _this.errors = error.response.data.errors;
       });
     }
   }
@@ -1847,6 +1852,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1854,7 +1861,8 @@ __webpack_require__.r(__webpack_exports__);
         id: '',
         title: '',
         summary: ''
-      }
+      },
+      errors: {}
     };
   },
   methods: {
@@ -1866,6 +1874,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.$router.push({
           name: 'book-list'
         });
+      }).catch(function (error) {
+        _this.errors = error.response.data.errors;
       });
     },
     editBook: function editBook() {
@@ -37659,7 +37669,13 @@ var render = function() {
               _vm.$set(_vm.book, "title", $event.target.value)
             }
           }
-        })
+        }),
+        _vm._v(" "),
+        _vm.errors.title
+          ? _c("p", { staticClass: "text-danger" }, [
+              _vm._v(_vm._s(_vm.errors.title[0]))
+            ])
+          : _vm._e()
       ])
     ]),
     _vm._v(" "),
@@ -37694,7 +37710,13 @@ var render = function() {
               _vm.$set(_vm.book, "summary", $event.target.value)
             }
           }
-        })
+        }),
+        _vm._v(" "),
+        _vm.errors.summary
+          ? _c("p", { staticClass: "text-danger" }, [
+              _vm._v(_vm._s(_vm.errors.summary[0]))
+            ])
+          : _vm._e()
       ])
     ]),
     _vm._v(" "),
@@ -37779,7 +37801,13 @@ var render = function() {
               _vm.$set(_vm.book, "title", $event.target.value)
             }
           }
-        })
+        }),
+        _vm._v(" "),
+        _vm.errors.title
+          ? _c("p", { staticClass: "text-danger" }, [
+              _vm._v(_vm._s(_vm.errors.title[0]))
+            ])
+          : _vm._e()
       ])
     ]),
     _vm._v(" "),
@@ -37814,7 +37842,13 @@ var render = function() {
               _vm.$set(_vm.book, "summary", $event.target.value)
             }
           }
-        })
+        }),
+        _vm._v(" "),
+        _vm.errors.summary
+          ? _c("p", { staticClass: "text-danger" }, [
+              _vm._v(_vm._s(_vm.errors.summary[0]))
+            ])
+          : _vm._e()
       ])
     ]),
     _vm._v(" "),
