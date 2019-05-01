@@ -70,6 +70,7 @@ class InvoiceController extends Controller
     public function edit($id)
     {
         $invoice = Invoice::with('products')->findOrFail($id);
+        $invoice = json_encode($invoice);
         return view('invoices.edit', compact('invoice'));
     }
 

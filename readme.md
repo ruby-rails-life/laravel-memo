@@ -11,8 +11,8 @@
 - Multiple Authentication
 - Event-Listener-Subscribe
 - Vue.js
-  - [CRUD:Invoice](https://github.com/codekerala/laravel-vuejs-invoice) 
-  - vue-router(/books)
+  - [Invoice(One To Many)](https://github.com/codekerala/laravel-vuejs-invoice) 
+  - vue-router CRUD(/books)
 
 ## Memo
 - Article CRUD[/]
